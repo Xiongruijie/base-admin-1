@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/numide.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+
+
+
+    <form class="layui-form"  id="inputForm" name="form" method="post" target="hidden">
+        <!--    输入信息    -->
+        <fieldset class="layui-elem-field">
+            <legend>信息</legend>
+            <div class="layui-row layui-col-space15">
+                <!--    时间选择-->
+                    <!--    表单不刷新    -->
+                    <iframe name="hidden" style="display:none;"></iframe>
+                <div class="layui-col-md4">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="UserName" id="UserName" autocomplete="on"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md4">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="inputDate" id="inputDateTime" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!--    样本类型-->
+                <div class="layui-col-md4">
+                    <label class="layui-form-label">样本类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sampleType" required  lay-verify="required" placeholder="请输入样本类型" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--    样本编号-->
+                <div class="layui-col-md4">
+                    <label class="layui-form-label">样本编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sampleNumber" required  lay-verify="required" placeholder="请输入样本编号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md15">
+                <label class="layui-form-label">来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sampleSource"    placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md15">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="remark"    placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </fieldset>
+<!--        输入按钮-->
+        <fieldset class="layui-elem-field">
+            <!-- 菌种阴性阳性输入表 -->
+            <!--    ip 命名规则   -->
+            <!--    第一个数字表示第几个输入框-->
+            <!--    第二个数字表示输入框中第几个元素，“124”分别是第一第二第三个元素-->
+            <!--    第三个数字表示ip代表数字符号还是数字-->
+            <legend>输入</legend>
+            <div class="layui-field-box numide-input-div">
+                <div class="layui-col-space10">
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="10" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(111,121,131,10)" onpaste="after_input(111,121,131,10)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="111" value="-" onclick="button_click(111,111,121,131,10)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="121" value="-" onclick="button_click(121,111,121,131,10)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="131" value="-" onclick="button_click(131,111,121,131,10)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Phe
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Xyl
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Raf
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="20" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(211,221,231,20)" onpaste="after_input(211,221,231,20)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="211" value="-" onclick="button_click(211,211,221,231,20)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="221" value="-" onclick="button_click(221,211,221,231,20)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="231" value="-" onclick="button_click(231,211,221,231,20)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Ind
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Suc
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Orn
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="30" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(311,321,331,30)" onpaste="after_input(311,321,331,30)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="311" value="-" onclick="button_click(311,311,321,331,30)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="321" value="-" onclick="button_click(321,311,321,331,30)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="331" value="-" onclick="button_click(331,311,321,331,30)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Lac
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                ONPG
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Ure
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="40" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(411,421,431,40)" onpaste="after_input(411,421,431,40)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="411" value="-" onclick="button_click(411,411,421,431,40)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="421" value="-" onclick="button_click(421,411,421,431,40)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="431" value="-" onclick="button_click(431,411,421,431,40)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Cit
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Malt
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Lys
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="50" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(511,521,531,50)" onpaste="after_input(511,521,531,50)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="511" value="-" onclick="button_click(511,511,521,531,50)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="521" value="-" onclick="button_click(521,511,521,531,50)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="531" value="-" onclick="button_click(531,511,521,531,50)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Malo
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Sor
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Dul
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="60" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(611,621,631,60)" onpaste="after_input(611,621,631,60)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="611" value="-" onclick="button_click(611,611,621,631,60)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="621" value="-" onclick="button_click(621,611,621,631,60)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="631" value="-" onclick="button_click(631,611,621,631,60)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Ara
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Mel
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Dul
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="70" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(711,721,731,70)" onpaste="after_input(711,721,731,70)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="711" value="-" onclick="button_click(711,711,721,731,70)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="721" value="-" onclick="button_click(721,711,721,731,70)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="731" value="-" onclick="button_click(731,711,721,731,70)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Esc
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                MR
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                H2S
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="80" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input(811,821,831,80)" onpaste="after_input(811,821,831,80)">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="811" value="-" onclick="button_click(811,811,821,831,80)">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="821" value="-" onclick="button_click(821,811,821,831,80)">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="button" class="layui-btn layui-btn-xs" id="831" value="-" onclick="button_click(831,811,821,831,80)">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                Tre
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                Cel
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                Ox
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+<!--        控制按钮-->
+        <fieldset class="layui-elem-field ">
+            <legend>控制按钮</legend>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md2">
+
+                </div>
+                <div class="layui-col-md2">
+                    <button  class="layui-btn layui-btn-primary" onclick="SubmitForm()">确认</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="reset" class="layui-btn layui-btn-primary">新实验</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-disabled">输出</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-disabled">打印</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-primary">退出</button>
+                </div>
+            </div>
+
+
+
+        </fieldset>
+    </form>
+    <!--输出-->
+    <fieldset class="layui-elem-field ">
+        <legend>结果</legend>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>昵称</th>
+                <th>加入时间</th>
+                <th>签名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据1</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据2</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据1</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据2</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据1</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据2</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据1</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据2</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据1</td>
+            </tr>
+            <tr>
+                <td>示例名称</td>
+                <td>日期数据 2016-11-29</td>
+                <td>示例数据2</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </fieldset>
+</div>
+
+
+
+</body>
+
+<!-- js -->
+<!--<script th:src="@{/sys/user/js/user.js}"></script>-->
+<!--<script th:src="@{/sys/menu/js/menu.js}"></script>-->
+<script th:src="@{/numide/js/numide.js}" ></script>
+
+
+</html>
+
