@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/numide.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/query.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<table id="demo" lay-filter="test"></table>
+</body>
+<script th:src="@{/numide/js/query.js}" ></script>
+<script src="//unpkg.com/layui@2.7.6/dist/layui.js"/>
+
+</html>
+

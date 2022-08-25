@@ -1,0 +1,22 @@
+.layui-btn{
+    height: auto;
+    width: auto;
+    overflow:visible;
+    text-overflow:inherit;
+    white-space:normal;
+}
+.layui-card-header{
+    width: 35px;
+    margin: 0 auto;
+    padding-top: 5px;
+}
+.numide-input-div{
+    position: center;
+}
+.numide-input-element-div{
+    width: 153px;
+}
+.button-margin{
+    margin: auto;
+    padding-left: 5px;
+}
