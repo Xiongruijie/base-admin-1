@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ComputeResult implements Comparable<ComputeResult>{
+
     private Integer strainId;
 
     private Float identification = null;

@@ -898,6 +898,41 @@ public class NumideServiceImpl implements NumideService {
 
         return "鉴定结果错误";
     }
+
+    /**
+     * @Author: Xiongruijie
+     * @Param: List<ComputeResult> computeResultList,InputFeature inputFeature
+     * @return: List<Supplement>
+     * @Author: Xiongruijie
+     * @date: 2022/8/25
+     * @time: 20:58
+     * @description:
+     */
+    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature){
+
+        List<SupplementCompute> supplementComputeList = new ArrayList<>();
+        for (ComputeResult computeResult:computeResultList){
+            SupplementCompute supplementCompute = new SupplementCompute();
+            supplementCompute.ExtractFeature(strainTestRepository.getOne(computeResult.getStrainId()));
+            supplementComputeList.add(supplementCompute);
+        }
+        // TODO: 2022/8/25 补充生化反应这里准备只取区分指标最大的第一条实验
+        /**
+         * 对每个supplementCompute域遍历
+         * 1.计算一个域
+         * 2.遍历5个computeResult的阈值
+         * 3.放入list
+         */
+
+        for (SupplementCompute supplementCompute:supplementComputeList){
+        }
+
+
+
+
+        return null;
+    }
+
     /**
      * @Author: Xiongruijie
      * @Param: InputFeature inputFeature
