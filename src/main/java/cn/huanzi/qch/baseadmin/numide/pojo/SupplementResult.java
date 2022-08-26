@@ -9,6 +9,21 @@ import lombok.Data;
  */
 @Data
 public class SupplementResult {
-    private Integer Positive;
-    private Integer Nagetive;
+    private Integer Positive=null;
+    private Integer Negative=null;
+    private Boolean NaN=null;
+    private Integer Value=null;
+
+    public Integer getValue() {
+
+        if (NaN!=true){
+            this.Value = (this.Negative * this.Negative) + (this.Positive * this.Positive);
+
+            return this.Value;
+        }else {
+            return -1;
+        }
+
+    }
 }
+

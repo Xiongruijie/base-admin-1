@@ -2,9 +2,9 @@ package cn.huanzi.qch.baseadmin.numide.service;
 
 
 import cn.huanzi.qch.baseadmin.numide.pojo.*;
-import cn.huanzi.qch.baseadmin.numide.repository.BiochemicalTestRepository;
-import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
-import cn.huanzi.qch.baseadmin.numide.repository.StrainTestRepository;
+import cn.huanzi.qch.baseadmin.numide.exception.repository.BiochemicalTestRepository;
+import cn.huanzi.qch.baseadmin.numide.exception.repository.StrainRepository;
+import cn.huanzi.qch.baseadmin.numide.exception.repository.StrainTestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -908,7 +908,7 @@ public class NumideServiceImpl implements NumideService {
      * @time: 20:58
      * @description:
      */
-    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature){
+    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature) throws NoSuchMethodException {
 
         List<SupplementCompute> supplementComputeList = new ArrayList<>();
         for (ComputeResult computeResult:computeResultList){
@@ -924,9 +924,45 @@ public class NumideServiceImpl implements NumideService {
          * 3.放入list
          */
 
-        for (SupplementCompute supplementCompute:supplementComputeList){
+//        for (SupplementCompute supplementCompute:supplementComputeList){
+//            // 取出该
+//            Class<? extends SupplementCompute> supplementComputeClass = supplementCompute.getClass();
+//            Field[] fields = supplementComputeClass.getDeclaredFields();
+//            for (Field field: fields){
+//                String fieldName = field.getName();
+//                if (fieldName.equals("strainId")){
+//                    continue;
+//                }
+//                String number = fieldName.substring(9);
+//
+//                Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment"+number, null);
+//
+//            }
+//        }
+        Class<? extends SupplementCompute> supplementComputeClass = SupplementCompute.class;
+
+        List<String> idList = new ArrayList<>();
+
+        for (ComputeResult computeResult:computeResultList){
+            Integer id = computeResult.getStrainId();
+            String idString = id.toString();
+            idList.add(idString);
         }
 
+
+        for (int i = 1; i <= 47; i++){
+            Method methodGet0 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+            Method methodGet1 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+            Method methodGet2 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+            Method methodGet3 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+            Method methodGet4 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+
+            supplementComputeList.get(0).;
+            supplementComputeList.get(1).;
+            supplementComputeList.get(2).;
+            supplementComputeList.get(3).;
+            supplementComputeList.get(4).;
+        }
 
 
 

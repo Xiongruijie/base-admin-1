@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.repository;
+package cn.huanzi.qch.baseadmin.numide.exception.repository;
 
 import cn.huanzi.qch.baseadmin.numide.pojo.BiochemicalTest;
 import org.springframework.data.jpa.repository.JpaRepository;
