@@ -8,11 +8,17 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class SupplementResult {
+public class SupplementResult implements Comparable<SupplementResult> {
+    private Integer strain_id = null;
     private Integer Positive=null;
     private Integer Negative=null;
     private Boolean NaN=null;
     private Integer Value=null;
+
+    @Override
+    public int compareTo(SupplementResult o) {
+        return (int) (o.getValue() - this.getValue());
+    }
 
     public Integer getValue() {
 
@@ -21,6 +27,7 @@ public class SupplementResult {
 
             return this.Value;
         }else {
+            this.Value = -1;
             return -1;
         }
 

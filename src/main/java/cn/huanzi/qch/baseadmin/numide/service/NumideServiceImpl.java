@@ -908,7 +908,7 @@ public class NumideServiceImpl implements NumideService {
      * @time: 20:58
      * @description:
      */
-    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature) throws NoSuchMethodException {
+    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         List<SupplementCompute> supplementComputeList = new ArrayList<>();
         for (ComputeResult computeResult:computeResultList){
@@ -941,27 +941,34 @@ public class NumideServiceImpl implements NumideService {
 //        }
         Class<? extends SupplementCompute> supplementComputeClass = SupplementCompute.class;
 
-        List<String> idList = new ArrayList<>();
-
-        for (ComputeResult computeResult:computeResultList){
-            Integer id = computeResult.getStrainId();
-            String idString = id.toString();
-            idList.add(idString);
-        }
-
-
+        List<SupplementResult> supplementResultList = new ArrayList<>();
         for (int i = 1; i <= 47; i++){
-            Method methodGet0 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
-            Method methodGet1 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
-            Method methodGet2 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
-            Method methodGet3 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
-            Method methodGet4 = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
-
-            supplementComputeList.get(0).;
-            supplementComputeList.get(1).;
-            supplementComputeList.get(2).;
-            supplementComputeList.get(3).;
-            supplementComputeList.get(4).;
+            Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+            SupplementResult supplementResult = new SupplementResult();
+            supplementResult.setStrain_id(i);
+            // supplementResult是关于5个菌群47个实验补充实验评判标准结果集
+            for(int j = 0; j<5;j++){
+                if (supplementResult.getNaN()==true){
+                    continue;
+                }
+                if((Character)methodGet.invoke(supplementComputeList.get(j),null) == '?'){
+                    supplementResult.setNaN(true);
+                }else if ((Character)methodGet.invoke(supplementComputeList.get(j),null) == '+'){
+                    if(supplementResult.getPositive()==null){
+                        supplementResult.setPositive(1);
+                    }else {
+                        supplementResult.setPositive(supplementResult.getPositive() + 1);
+                    }
+                }else{
+                    if(supplementResult.getNegative()==null){
+                        supplementResult.setNegative(1);
+                    }else {
+                        supplementResult.setNegative(supplementResult.getNegative() + 1);
+                    }
+                }
+            }
+            supplementResult.getValue();
+            supplementResultList.add(supplementResult);
         }
 
 
