@@ -17,7 +17,6 @@ public class NumideResult implements Serializable {
 
     private Map<BiochemicalTest, InconsistentRecord> inconsistentRecordMap = null;
 
-
     // 补充生化反应
     private Supplement supplement = null;
 

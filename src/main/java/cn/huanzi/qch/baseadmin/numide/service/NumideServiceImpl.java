@@ -970,7 +970,7 @@ public class NumideServiceImpl implements NumideService {
         supplement.setNum0((Integer) methodGet0.invoke(strainTestRepository.getOne(computeResultList.get(0).getStrainId())));
 
         Method methodGet1 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
-        supplement.setNum2((Integer) methodGet1.invoke(strainTestRepository.getOne(computeResultList.get(1).getStrainId())));
+        supplement.setNum1((Integer) methodGet1.invoke(strainTestRepository.getOne(computeResultList.get(1).getStrainId())));
 
         Method methodGet2 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
         supplement.setNum2((Integer) methodGet2.invoke(strainTestRepository.getOne(computeResultList.get(2).getStrainId())));
@@ -1028,5 +1028,77 @@ public class NumideServiceImpl implements NumideService {
         numideResult.setResultEvaluation(this.getResultEvaluation(computeResultList));
 
         return numideResult;
+    }
+
+    public OutputResult getOutputResult(InputFeature inputFeature) throws Exception {
+        OutputResult outputResult = new OutputResult();
+        NumideResult numideResult = this.getNumideResult(inputFeature);
+
+        List<OutputResultElement> outputResultElementList = new ArrayList<>();
+        OutputResultElement StrainName = new OutputResultElement();
+
+        // 英文名
+        for (int i = 1; i<6;i++){
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
+            Method methodGet = OutputResultElement.class.getDeclaredMethod("getElement"+i,null);
+            methodSet.invoke(StrainName,numideResult.getNumideResultElementList().get(i-1).getStrain().getStrainName());
+        }
+        outputResultElementList.add(StrainName);
+
+
+        // 中文名
+        OutputResultElement StrainChName = new OutputResultElement();
+        for (int i = 1; i<6;i++){
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
+            methodSet.invoke(StrainChName,numideResult.getNumideResultElementList().get(i-1).getStrain().getStrainChName());
+        }
+        outputResultElementList.add(StrainChName);
+        // strainName 设置
+        outputResult.setStrainName(outputResultElementList);
+
+        // computeValue设置
+        List<OutputResultElement> computeValue = new ArrayList<>();
+        // 鉴定百分数
+        OutputResultElement identification = new OutputResultElement();
+        for (int i = 0; i < 6; i++){
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
+            if (i == 0){
+                methodSet.invoke(identification,"鉴定百分数：");
+                continue;
+            }
+            methodSet.invoke(identification,numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification().toString()+"%");
+        }
+        computeValue.add(identification);
+        // T值
+        OutputResultElement T_value = new OutputResultElement();
+        for (int i = 0; i < 6; i++){
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
+            if (i == 0){
+                methodSet.invoke(T_value,"T值：");
+                continue;
+            }
+            if (numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification()<0.01){
+                methodSet.invoke(T_value,"<0.01%");
+            }else {
+                methodSet.invoke(T_value,numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification().toString()+"%");
+            }
+        }
+        computeValue.add(T_value);
+        outputResult.setComputeValue(computeValue);
+
+        // inconsistent
+        Map<BiochemicalTest, InconsistentRecord> inconsistentRecordMap = numideResult.getInconsistentRecordMap();
+        List<OutputResultElement> inconsistent = new ArrayList<>();
+
+        for (Map.Entry<BiochemicalTest, InconsistentRecord> entry: inconsistentRecordMap.entrySet()){
+            OutputResultElement inconsistentElement = new OutputResultElement();
+            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
+//            inconsistentElement.setElement1();
+            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
+            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
+            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
+        }
+
+        return null;
     }
 }

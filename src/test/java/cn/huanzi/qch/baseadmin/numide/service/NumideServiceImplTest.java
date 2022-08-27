@@ -21,6 +21,6 @@ public class NumideServiceImplTest extends TestCase {
     @Test
     public void testGetNumideResult() throws Exception {
         InputFeature inputFeature = new InputFeature();
-        System.out.println(numideService.getNumideResult(inputFeature).getInconsistentRecordMap());
+        System.out.println(numideService.getNumideResult(inputFeature).getSupplement());
     }
 }
