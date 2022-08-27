@@ -16,6 +16,11 @@
     </parent>
 
     <dependencies>
+        <!-- json       -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
         <!-- spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

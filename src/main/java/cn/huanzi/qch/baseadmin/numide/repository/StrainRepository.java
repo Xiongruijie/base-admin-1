@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.exception.repository;
+package cn.huanzi.qch.baseadmin.numide.repository;
 
 
 import cn.huanzi.qch.baseadmin.numide.pojo.Strain;

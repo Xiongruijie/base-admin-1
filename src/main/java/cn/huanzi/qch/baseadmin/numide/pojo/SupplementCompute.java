@@ -15,97 +15,51 @@ public class SupplementCompute {
     private Integer strainId;
 
     private Character experiment1;
-
     private Character experiment2;
-
     private Character experiment3;
-
     private Character experiment4;
-
     private Character experiment5;
-
     private Character experiment6;
-
     private Character experiment7;
-
     private Character experiment8;
-
     private Character experiment9;
-
     private Character experiment10;
-
     private Character experiment11;
-
     private Character experiment12;
-
     private Character experiment13;
-
     private Character experiment14;
-
     private Character experiment15;
-
     private Character experiment16;
-
     private Character experiment17;
-
     private Character experiment18;
-
     private Character experiment19;
-
     private Character experiment20;
-
     private Character experiment21;
-
     private Character experiment22;
-
     private Character experiment23;
-
     private Character experiment24;
-
     private Character experiment25;
-
     private Character experiment26;
-
     private Character experiment27;
-
     private Character experiment28;
-
     private Character experiment29;
-
     private Character experiment30;
-
     private Character experiment31;
-
     private Character experiment32;
-
     private Character experiment33;
-
     private Character experiment34;
-
     private Character experiment35;
-
     private Character experiment36;
-
     private Character experiment37;
-
     private Character experiment38;
-
     private Character experiment39;
-
     private Character experiment40;
-
     private Character experiment41;
-
     private Character experiment42;
-
     private Character experiment43;
-
     private Character experiment44;
-
     private Character experiment45;
-
     private Character experiment46;
-
     private Character experiment47;
 
     public void ExtractFeature(StrainTest strainTest){

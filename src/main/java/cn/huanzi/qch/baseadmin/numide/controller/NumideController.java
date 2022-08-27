@@ -3,7 +3,7 @@ package cn.huanzi.qch.baseadmin.numide.controller;
 import cn.huanzi.qch.baseadmin.common.pojo.Result;
 import cn.huanzi.qch.baseadmin.numide.pojo.InputFeature;
 import cn.huanzi.qch.baseadmin.numide.pojo.Strain;
-import cn.huanzi.qch.baseadmin.numide.exception.repository.StrainRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.service.NumideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

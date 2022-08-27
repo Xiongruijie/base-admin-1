@@ -2,9 +2,9 @@ package cn.huanzi.qch.baseadmin.numide.service;
 
 
 import cn.huanzi.qch.baseadmin.numide.pojo.*;
-import cn.huanzi.qch.baseadmin.numide.exception.repository.BiochemicalTestRepository;
-import cn.huanzi.qch.baseadmin.numide.exception.repository.StrainRepository;
-import cn.huanzi.qch.baseadmin.numide.exception.repository.StrainTestRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.BiochemicalTestRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.StrainTestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -240,7 +240,8 @@ public class NumideServiceImpl implements NumideService {
                 }else if(feature == '-'){
                     methodSet.invoke(computePrepare,100 - (Integer) methodGet.invoke(computePrepare, null));
                 }else if (feature == '?'){
-                    methodSet.invoke(computePrepare,null);
+                    //methodSet.invoke(computePrepare,null);
+
                 } else {
                     throw new Exception("输入错误，非？-+三个字符中任意一个");
                 }
@@ -896,7 +897,7 @@ public class NumideServiceImpl implements NumideService {
         }
 
 
-        return "鉴定结果错误";
+        return "不可接受的鉴定结果";
     }
 
     /**
@@ -906,9 +907,13 @@ public class NumideServiceImpl implements NumideService {
      * @Author: Xiongruijie
      * @date: 2022/8/25
      * @time: 20:58
-     * @description:
+     * @description: List<ComputeResult> computeResultList size必须为5
      */
-    public List<Supplement> getSupplementList(List<ComputeResult> computeResultList,InputFeature inputFeature) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public Supplement getSupplement(List<ComputeResult> computeResultList) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        if (computeResultList.size()!=5){
+            log.error("错误结果列表大小不为5！");
+            return null;
+        }
 
         List<SupplementCompute> supplementComputeList = new ArrayList<>();
         for (ComputeResult computeResult:computeResultList){
@@ -916,45 +921,29 @@ public class NumideServiceImpl implements NumideService {
             supplementCompute.ExtractFeature(strainTestRepository.getOne(computeResult.getStrainId()));
             supplementComputeList.add(supplementCompute);
         }
-        // TODO: 2022/8/25 补充生化反应这里准备只取区分指标最大的第一条实验
-        /**
-         * 对每个supplementCompute域遍历
-         * 1.计算一个域
-         * 2.遍历5个computeResult的阈值
-         * 3.放入list
-         */
 
-//        for (SupplementCompute supplementCompute:supplementComputeList){
-//            // 取出该
-//            Class<? extends SupplementCompute> supplementComputeClass = supplementCompute.getClass();
-//            Field[] fields = supplementComputeClass.getDeclaredFields();
-//            for (Field field: fields){
-//                String fieldName = field.getName();
-//                if (fieldName.equals("strainId")){
-//                    continue;
-//                }
-//                String number = fieldName.substring(9);
-//
-//                Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment"+number, null);
-//
-//            }
-//        }
+
+        // 补充生化反应这里准备只取区分指标最大的第一条实验
+
         Class<? extends SupplementCompute> supplementComputeClass = SupplementCompute.class;
 
         List<SupplementResult> supplementResultList = new ArrayList<>();
         for (int i = 1; i <= 47; i++){
             Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
             SupplementResult supplementResult = new SupplementResult();
-            supplementResult.setStrain_id(i);
             // supplementResult是关于5个菌群47个实验补充实验评判标准结果集
+            // 设置实验id
+            supplementResult.setStrain_id(i);
+
             for(int j = 0; j<5;j++){
-                if (supplementResult.getNaN()==true){
+                // 第i个实验的第j个结果
+                if (supplementResult.getNaN() == true){
                     continue;
                 }
                 if((Character)methodGet.invoke(supplementComputeList.get(j),null) == '?'){
                     supplementResult.setNaN(true);
                 }else if ((Character)methodGet.invoke(supplementComputeList.get(j),null) == '+'){
-                    if(supplementResult.getPositive()==null){
+                    if(supplementResult.getPositive()==0){
                         supplementResult.setPositive(1);
                     }else {
                         supplementResult.setPositive(supplementResult.getPositive() + 1);
@@ -970,10 +959,29 @@ public class NumideServiceImpl implements NumideService {
             supplementResult.getValue();
             supplementResultList.add(supplementResult);
         }
+        Collections.sort(supplementResultList);
+        SupplementResult supplementResult = supplementResultList.get(0);
+        Integer topId = supplementResult.getStrain_id();
+        Supplement supplement = new Supplement();
+        BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(supplementResult.getStrain_id());
+        supplement.setBiochemicalTest(biochemicalTest);
 
+        Method methodGet0 = StrainTest.class.getDeclaredMethod("getExperiment"+ topId,null);
+        supplement.setNum0((Integer) methodGet0.invoke(strainTestRepository.getOne(computeResultList.get(0).getStrainId())));
 
+        Method methodGet1 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        supplement.setNum2((Integer) methodGet1.invoke(strainTestRepository.getOne(computeResultList.get(1).getStrainId())));
 
-        return null;
+        Method methodGet2 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        supplement.setNum2((Integer) methodGet2.invoke(strainTestRepository.getOne(computeResultList.get(2).getStrainId())));
+
+        Method methodGet3 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        supplement.setNum3((Integer) methodGet3.invoke(strainTestRepository.getOne(computeResultList.get(3).getStrainId())));
+
+        Method methodGet4 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        supplement.setNum4((Integer) methodGet4.invoke(strainTestRepository.getOne(computeResultList.get(4).getStrainId())));
+
+        return supplement;
     }
 
     /**
@@ -1012,7 +1020,9 @@ public class NumideServiceImpl implements NumideService {
         numideResult.setInconsistentRecordMap(inconsistentRecordMap);
 
         // 第三个结果 存补充实验
-        // TODO: 2022/8/23 补充实验算法不确定，需要明确如何从Inputfeature中计算补充实验
+        Supplement supplement = new Supplement();
+        supplement = getSupplement(computeResultList);
+        numideResult.setSupplement(supplement);
 
         // 第四个结果 存实验评价
         numideResult.setResultEvaluation(this.getResultEvaluation(computeResultList));

@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class SupplementResult implements Comparable<SupplementResult> {
     private Integer strain_id = null;
-    private Integer Positive=null;
-    private Integer Negative=null;
-    private Boolean NaN=null;
+    private Integer Positive=0;
+    private Integer Negative=0;
+    private Boolean NaN=false;
     private Integer Value=null;
 
     @Override
