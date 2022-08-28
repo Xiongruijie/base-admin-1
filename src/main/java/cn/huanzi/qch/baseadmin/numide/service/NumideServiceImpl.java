@@ -5,6 +5,8 @@ import cn.huanzi.qch.baseadmin.numide.pojo.*;
 import cn.huanzi.qch.baseadmin.numide.repository.BiochemicalTestRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainTestRepository;
+import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
+import cn.huanzi.qch.baseadmin.numide.vo.OutputResultElementVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,12 +92,18 @@ public class NumideServiceImpl implements NumideService {
      * @time: 10:34
      * @description:
      */
-    public List<StrainTest> PreCompute(List<StrainTest> strainTestList) throws IllegalAccessException {
+    public List<StrainTest> PreCompute(List<StrainTest> strainTestList) throws IllegalAccessException, CloneNotSupportedException {
         Integer integer1 = 1;
         Integer integer0 = 0;
         Integer integer100 = 100;
         Integer integer99 = 99;
-        for (StrainTest strainTest : strainTestList) {
+        List<StrainTest> strainTestListBackup = new ArrayList<>();
+        for (StrainTest strainTest: strainTestList){
+            StrainTest strainTest1 = new StrainTest();
+            strainTest1 = (StrainTest) strainTest.clone();
+            strainTestListBackup.add(strainTest1);
+        }
+        for (StrainTest strainTest : strainTestListBackup) {
             Class cls = strainTest.getClass();
             Field[] fields = cls.getDeclaredFields();
             for (Field field : fields) {
@@ -117,7 +125,7 @@ public class NumideServiceImpl implements NumideService {
                 }
             }
         }
-        return strainTestList;
+        return strainTestListBackup;
     }
 
     /**
@@ -1043,38 +1051,38 @@ public class NumideServiceImpl implements NumideService {
         return numideResult;
     }
 
-    public OutputResult getOutputResult(InputFeature inputFeature) throws Exception {
-        OutputResult outputResult = new OutputResult();
+    public OutputResultVo getOutputResult(InputFeature inputFeature) throws Exception {
+        OutputResultVo outputResultVo = new OutputResultVo();
         NumideResult numideResult = this.getNumideResult(inputFeature);
 
-        List<OutputResultElement> outputResultElementList = new ArrayList<>();
-        OutputResultElement StrainName = new OutputResultElement();
+        List<OutputResultElementVo> outputResultElementList = new ArrayList<>();
+        OutputResultElementVo StrainName = new OutputResultElementVo();
 
         // 英文名
         for (int i = 1; i < 6; i++) {
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
-            Method methodGet = OutputResultElement.class.getDeclaredMethod("getElement" + i, null);
+            Method methodSet = OutputResultElementVo.class.getDeclaredMethod("setElement" + i, String.class);
+            Method methodGet = OutputResultElementVo.class.getDeclaredMethod("getElement" + i, null);
             methodSet.invoke(StrainName, numideResult.getNumideResultElementList().get(i - 1).getStrain().getStrainName());
         }
         outputResultElementList.add(StrainName);
 
 
         // 中文名
-        OutputResultElement StrainChName = new OutputResultElement();
+        OutputResultElementVo StrainChName = new OutputResultElementVo();
         for (int i = 1; i < 6; i++) {
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            Method methodSet = OutputResultElementVo.class.getDeclaredMethod("setElement" + i, String.class);
             methodSet.invoke(StrainChName, numideResult.getNumideResultElementList().get(i - 1).getStrain().getStrainChName());
         }
         outputResultElementList.add(StrainChName);
         // strainName 设置
-        outputResult.setStrainName(outputResultElementList);
+        outputResultVo.setStrainName(outputResultElementList);
 
         // computeValue设置
-        List<OutputResultElement> computeValue = new ArrayList<>();
+        List<OutputResultElementVo> computeValue = new ArrayList<>();
         // 鉴定百分数
-        OutputResultElement identification = new OutputResultElement();
+        OutputResultElementVo identification = new OutputResultElementVo();
         for (int i = 0; i < 6; i++) {
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            Method methodSet = OutputResultElementVo.class.getDeclaredMethod("setElement" + i, String.class);
             if (i == 0) {
                 methodSet.invoke(identification, "鉴定百分数：");
                 continue;
@@ -1083,9 +1091,9 @@ public class NumideServiceImpl implements NumideService {
         }
         computeValue.add(identification);
         // T值
-        OutputResultElement T_value = new OutputResultElement();
+        OutputResultElementVo T_value = new OutputResultElementVo();
         for (int i = 0; i < 6; i++) {
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            Method methodSet = OutputResultElementVo.class.getDeclaredMethod("setElement" + i, String.class);
             if (i == 0) {
                 methodSet.invoke(T_value, "T值：");
                 continue;
@@ -1097,14 +1105,14 @@ public class NumideServiceImpl implements NumideService {
             }
         }
         computeValue.add(T_value);
-        outputResult.setComputeValue(computeValue);
+        outputResultVo.setComputeValue(computeValue);
 
         // inconsistent
         Map<BiochemicalTest, InconsistentRecord> inconsistentRecordMap = numideResult.getInconsistentRecordMap();
-        List<OutputResultElement> inconsistent = new ArrayList<>();
+        List<OutputResultElementVo> inconsistent = new ArrayList<>();
 
         for (Map.Entry<BiochemicalTest, InconsistentRecord> entry : inconsistentRecordMap.entrySet()) {
-            OutputResultElement inconsistentElement = new OutputResultElement();
+            OutputResultElementVo inconsistentElement = new OutputResultElementVo();
             inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
             inconsistentElement.setElement1((entry.getValue().getNum0() != null) ? entry.getValue().getNum0().toString() : null);
             inconsistentElement.setElement2((entry.getValue().getNum1() != null) ? entry.getValue().getNum1().toString() : null);
@@ -1113,10 +1121,10 @@ public class NumideServiceImpl implements NumideService {
             inconsistentElement.setElement5((entry.getValue().getNum4() != null) ? entry.getValue().getNum4().toString() : null);
             inconsistent.add(inconsistentElement);
         }
-        outputResult.setInconsistent(inconsistent);
+        outputResultVo.setInconsistent(inconsistent);
         // 补充实验
-        List<OutputResultElement> supplementList = new ArrayList<>();
-        OutputResultElement supplement = new OutputResultElement();
+        List<OutputResultElementVo> supplementList = new ArrayList<>();
+        OutputResultElementVo supplement = new OutputResultElementVo();
         Supplement numideResultSupplementsupplement = numideResult.getSupplement();
         supplement.setElement0(numideResultSupplementsupplement.getBiochemicalTest().getBiochemicalCh());
         supplement.setElement1(numideResultSupplementsupplement.getNum0().toString());
@@ -1125,12 +1133,12 @@ public class NumideServiceImpl implements NumideService {
         supplement.setElement4(numideResultSupplementsupplement.getNum3().toString());
         supplement.setElement5(numideResultSupplementsupplement.getNum4().toString());
         supplementList.add(supplement);
-        outputResult.setSupplement(supplementList);
+        outputResultVo.setSupplement(supplementList);
 
         //结果评价
-        outputResult.setResultEvaluation("结果评价: " + numideResult.getResultEvaluation() + ": " + StrainName.getElement1());
+        outputResultVo.setResultEvaluation("结果评价: " + numideResult.getResultEvaluation() + ": " + StrainName.getElement1());
 
 
-        return outputResult;
+        return outputResultVo;
     }
 }

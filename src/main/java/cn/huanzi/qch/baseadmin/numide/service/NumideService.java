@@ -3,6 +3,7 @@ package cn.huanzi.qch.baseadmin.numide.service;
 //import cn.huanzi.qch.baseadmin.numide.vo.QueryVo;
 
 import cn.huanzi.qch.baseadmin.numide.pojo.*;
+import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -22,6 +23,6 @@ public interface NumideService  {
 
     public NumideResult getNumideResult(InputFeature inputFeature) throws Exception;
 
-    public OutputResult getOutputResult(InputFeature inputFeature) throws Exception;
+    public OutputResultVo getOutputResult(InputFeature inputFeature) throws Exception;
 
 }

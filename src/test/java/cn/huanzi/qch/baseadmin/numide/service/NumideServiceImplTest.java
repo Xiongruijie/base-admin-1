@@ -26,6 +26,9 @@ public class NumideServiceImplTest extends TestCase {
     @Test
     public void testGetOutputResult() throws Exception {
         InputFeature inputFeature = new InputFeature();
+        System.out.println("===========================getOutputResult================================================");
         System.out.println(numideService.getOutputResult(inputFeature));
+        System.out.println("===========================getNumideResult================================================");
+        System.out.println(numideService.getNumideResult(inputFeature));
     }
 }

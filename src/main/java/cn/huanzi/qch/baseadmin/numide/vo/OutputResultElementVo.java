@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.pojo;
+package cn.huanzi.qch.baseadmin.numide.vo;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description: OutputResult的通用元素类
  */
 @Data
-public class OutputResultElement {
+public class OutputResultElementVo {
     private String Element0=null;
     private String Element1=null;
     private String Element2=null;

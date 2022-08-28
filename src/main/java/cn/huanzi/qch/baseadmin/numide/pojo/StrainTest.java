@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Lazy(value = false)
 @Proxy(lazy=false)
 @Table(name = "strain_test_table")
-public class StrainTest {
+public class StrainTest implements Cloneable{
 
   @Id
   private Integer strainId;
@@ -115,4 +115,9 @@ public class StrainTest {
   private Integer experiment47;
 
 
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    StrainTest strainTest = (StrainTest) super.clone();
+    return strainTest;
+  }
 }

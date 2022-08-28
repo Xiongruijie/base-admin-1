@@ -88,11 +88,22 @@ function SubmitForm() {
     // let Cel = $('#821').val();
     // let Ox = $('#831').val();
 
-    let InputForm = $("#inputForm").serializeObject();
-    InputForm.updateTime = commonUtil.getNowTime();
-    $.post(ctx + "/sys/sysUser/save", InputForm,function (data){
-
-        });
+    // let serializeObject = $("#sysForm").serializeObject();
+    // //获取编辑器内容
+    // serializeObject.sysNoticeText = sysNoticeTextEdit.getContent();
+    // $.post(ctx + "/sys/sysSetting/save", serializeObject, function (data) {
+    //     layer.msg("修改成功！", {icon: 1, time: 2000}, function () {});
+    //     $("#sysForm").form(data.data);
+    //     $("#sysApiEncrypt").val(data.data.sysApiEncrypt)
+    // });
+    // let InputForm = $("#inputForm").serializeObject();
+    // InputForm.updateTime = commonUtil.getNowTime();
+    // $.post(ctx + "/numide/getForm", InputForm, function (data) {
+    //     layer.msg("提交成功！", {icon: 1, time: 2000}, function () {});
+    //     $("#inputForm").form(data.data);
+    //
+    // }
+    // ,);
 
 
 
