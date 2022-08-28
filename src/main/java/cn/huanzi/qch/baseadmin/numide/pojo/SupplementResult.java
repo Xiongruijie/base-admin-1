@@ -8,17 +8,17 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class SupplementResult implements Comparable<SupplementResult> {
+public class SupplementResult {
     private Integer strain_id = null;
     private Integer Positive=0;
     private Integer Negative=0;
     private Boolean NaN=false;
     private Integer Value=null;
 
-    @Override
-    public int compareTo(SupplementResult o) {
-        return (int) (o.getValue() - this.getValue());
-    }
+//    @Override
+//    public int compareTo(SupplementResult o) {
+//        return (int) (o.getValue() - this.getValue());
+//    }
 
     public Integer getValue() {
 

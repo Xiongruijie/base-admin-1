@@ -22,4 +22,6 @@ public interface NumideService  {
 
     public NumideResult getNumideResult(InputFeature inputFeature) throws Exception;
 
+    public OutputResult getOutputResult(InputFeature inputFeature) throws Exception;
+
 }

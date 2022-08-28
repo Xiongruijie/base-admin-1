@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class InputFeature {
     public Character Phe = '+';
-    public Character Xyl = '?';
-    public Character Raf = '?';
+    public Character Xyl = '+';
+    public Character Raf = '+';
     public Character Ind = '-';
     public Character Suc = '-';
     public Character Orn = '-';

@@ -36,12 +36,12 @@ public class NumideServiceImpl implements NumideService {
         List<StrainTest> strainTestList = strainTestRepository.findAll();
         return strainTestList;
     }
+
     @Override
     public StrainTest findOne(Integer index) {
         StrainTest strainTestList = strainTestRepository.getOne(index);
         return strainTestList;
     }
-
 
 
     /**
@@ -50,7 +50,7 @@ public class NumideServiceImpl implements NumideService {
      * @Author: Xiongruijie
      * @date: 17:09
      * // 对StrainTest对象预处理
-     *     // 将0和100转换为1和99
+     * // 将0和100转换为1和99
      */
     public void PreCompute(StrainTest strainTest) throws IllegalAccessException {
         Class cls = strainTest.getClass();
@@ -125,13 +125,13 @@ public class NumideServiceImpl implements NumideService {
      * @return: List<ComputePrepare>
      * @Author: Xiongruijie
      * @date: 17:09
-     *  * 生成计算准备对象
-     *     * 实际上计算只需要24个生化实验，根本不需要47个生化实验的数据
-     *     * 该函数目的是为了将24个生化实验的数据摘出来
+     * * 生成计算准备对象
+     * * 实际上计算只需要24个生化实验，根本不需要47个生化实验的数据
+     * * 该函数目的是为了将24个生化实验的数据摘出来
      */
-    public List<ComputePrepare> GenerateComputePrepareList(List<StrainTest> strainTestList){
+    public List<ComputePrepare> GenerateComputePrepareList(List<StrainTest> strainTestList) {
         List<ComputePrepare> computePrepareList = new ArrayList<ComputePrepare>();
-        for(StrainTest strainTest:strainTestList){
+        for (StrainTest strainTest : strainTestList) {
             ComputePrepare computePrepare = new ComputePrepare();
             computePrepare.setStrain_id(strainTest.getStrainId());
             computePrepare.setPhe(strainTest.getExperiment7());
@@ -170,10 +170,10 @@ public class NumideServiceImpl implements NumideService {
      * @date: 17:07
      * ComputeResultList的strain_id初始化
      */
-    public List<ComputeResult> InitComputeResultList(List<StrainTest> strainTestList){
+    public List<ComputeResult> InitComputeResultList(List<StrainTest> strainTestList) {
         List<ComputeResult> computeResultList = new ArrayList<ComputeResult>();
 
-        for (StrainTest strainTest:strainTestList) {
+        for (StrainTest strainTest : strainTestList) {
             ComputeResult computeResult = new ComputeResult();
             computeResult.setStrainId(strainTest.getStrainId());
             computeResultList.add(computeResult);
@@ -195,7 +195,7 @@ public class NumideServiceImpl implements NumideService {
         Double totalFrequency = Double.valueOf(1.0);
         int computePrepareIndex = 0;
         int computeResultIndex = 0;
-        for (ComputePrepare computePrepare:computePrepareList){
+        for (ComputePrepare computePrepare : computePrepareList) {
             // computePrepareList是整个实验数据库的记录
             // computePrepare是一个菌种的记录
             Class computePrepareClass = computePrepare.getClass();
@@ -208,21 +208,21 @@ public class NumideServiceImpl implements NumideService {
             Field[] inputFeatureClassDeclaredFields = inputFeatureClass.getDeclaredFields();
 
             //判定Result和ComputePrepare是否为同一个id
-            if(!computeResult.getStrainId().equals(computePrepare.getStrain_id())){
+            if (!computeResult.getStrainId().equals(computePrepare.getStrain_id())) {
                 log.info("StrainId不匹配");
-                System.out.println("computeResultID:"+computeResult.getStrainId()+"\n"
-                        +"computePrepareID:"+computePrepare.getStrain_id()
+                System.out.println("computeResultID:" + computeResult.getStrainId() + "\n"
+                        + "computePrepareID:" + computePrepare.getStrain_id()
                 );
             }
-            for (Field inputFeatureClassDeclaredField:inputFeatureClassDeclaredFields){
+            for (Field inputFeatureClassDeclaredField : inputFeatureClassDeclaredFields) {
                 inputFeatureClassDeclaredField.setAccessible(true);
             }
-            for (Field computePrepareClassDeclaredField:computePrepareClassDeclaredFields){
+            for (Field computePrepareClassDeclaredField : computePrepareClassDeclaredFields) {
                 computePrepareClassDeclaredField.setAccessible(true);
-                if(computePrepareClassDeclaredField.getName().equals("strain_id")||computePrepareClassDeclaredField.getName().equals("TSum")){
+                if (computePrepareClassDeclaredField.getName().equals("strain_id") || computePrepareClassDeclaredField.getName().equals("TSum")) {
                     continue;
                 }
-                if(computePrepareClassDeclaredField.getName().equals("sum")){
+                if (computePrepareClassDeclaredField.getName().equals("sum")) {
                     // TODO: 2022/8/18
                     // 将结果存入 computePrepare
 //                    computePrepare.setSum(itemIdentification);
@@ -232,14 +232,14 @@ public class NumideServiceImpl implements NumideService {
                 // 根据反射得到computePrepare的get和set方法
                 String featureName = computePrepareClassDeclaredField.getName();
                 Character feature = (Character) inputFeatureClass.getDeclaredField(computePrepareClassDeclaredField.getName()).get(inputFeature);
-                Method methodGet = computePrepareClass.getDeclaredMethod("get"+featureName, null);
-                Method methodSet = computePrepareClass.getDeclaredMethod("set"+featureName, Integer.class);
+                Method methodGet = computePrepareClass.getDeclaredMethod("get" + featureName, null);
+                Method methodSet = computePrepareClass.getDeclaredMethod("set" + featureName, Integer.class);
                 // 根据输入feature判定频率是否应该计算100-x
-                if (feature == '+'){
+                if (feature == '+') {
                     methodSet.invoke(computePrepare, (Integer) methodGet.invoke(computePrepare, null));
-                }else if(feature == '-'){
-                    methodSet.invoke(computePrepare,100 - (Integer) methodGet.invoke(computePrepare, null));
-                }else if (feature == '?'){
+                } else if (feature == '-') {
+                    methodSet.invoke(computePrepare, 100 - (Integer) methodGet.invoke(computePrepare, null));
+                } else if (feature == '?') {
                     //methodSet.invoke(computePrepare,null);
 
                 } else {
@@ -273,7 +273,7 @@ public class NumideServiceImpl implements NumideService {
 
         int computePrepareIndex = 0;
         int computeResultIndex = 0;
-        for (ComputePrepare computePrepare:computePrepareList){
+        for (ComputePrepare computePrepare : computePrepareList) {
             // computePrepareList是整个实验数据库的记录
             // computePrepare是一个菌种的记录
             Class computePrepareClass = computePrepare.getClass();
@@ -286,31 +286,31 @@ public class NumideServiceImpl implements NumideService {
             Field[] inputFeatureClassDeclaredFields = inputFeatureClass.getDeclaredFields();
 
             //判定Result和ComputePrepare是否为同一个id
-            if(!computeResult.getStrainId().equals(computePrepare.getStrain_id())){
+            if (!computeResult.getStrainId().equals(computePrepare.getStrain_id())) {
                 log.info("StrainId不匹配");
-                System.out.println("computeResultID:"+computeResult.getStrainId()+"\n"
-                        +"computePrepareID:"+computePrepare.getStrain_id()
+                System.out.println("computeResultID:" + computeResult.getStrainId() + "\n"
+                        + "computePrepareID:" + computePrepare.getStrain_id()
                 );
             }
-            for (Field inputFeatureClassDeclaredField:inputFeatureClassDeclaredFields){
+            for (Field inputFeatureClassDeclaredField : inputFeatureClassDeclaredFields) {
                 inputFeatureClassDeclaredField.setAccessible(true);
             }
-            for (Field computePrepareClassDeclaredField:computePrepareClassDeclaredFields){
+            for (Field computePrepareClassDeclaredField : computePrepareClassDeclaredFields) {
                 computePrepareClassDeclaredField.setAccessible(true);
-                if(computePrepareClassDeclaredField.getName().equals("strain_id")||computePrepareClassDeclaredField.getName().equals("TSum")){
+                if (computePrepareClassDeclaredField.getName().equals("strain_id") || computePrepareClassDeclaredField.getName().equals("TSum")) {
                     continue;
                 }
-                if(computePrepareClassDeclaredField.getName().equals("sum")){
+                if (computePrepareClassDeclaredField.getName().equals("sum")) {
                     continue;
                 }
                 // 根据反射得到computePrepare的get和set方法
                 String featureName = computePrepareClassDeclaredField.getName();
                 Character feature = (Character) inputFeatureClass.getDeclaredField(computePrepareClassDeclaredField.getName()).get(inputFeature);
-                Method methodGet = computePrepareClass.getDeclaredMethod("get"+featureName, null);
-                Method methodSet = computePrepareClass.getDeclaredMethod("set"+featureName, Integer.class);
+                Method methodGet = computePrepareClass.getDeclaredMethod("get" + featureName, null);
+                Method methodSet = computePrepareClass.getDeclaredMethod("set" + featureName, Integer.class);
                 // 根据数值判定频率是否应该计算100-x
-                if ((Integer) methodGet.invoke(computePrepare, null)<=50){
-                    methodSet.invoke(computePrepare,100 - (Integer) methodGet.invoke(computePrepare, null));
+                if ((Integer) methodGet.invoke(computePrepare, null) <= 50) {
+                    methodSet.invoke(computePrepare, 100 - (Integer) methodGet.invoke(computePrepare, null));
                 }
             }
             computePrepare.computeTSum();
@@ -331,9 +331,16 @@ public class NumideServiceImpl implements NumideService {
      * @date: 22:13
      * 对ComputeResult排序
      */
-    public void sortComputeResult(List<ComputeResult> computeResultList){
-        Collections.sort(computeResultList);
-        computeResultList = computeResultList.subList(0,5);
+    public void sortComputeResult(List<ComputeResult> computeResultList) {
+        computeResultList.sort(new Comparator<ComputeResult>() {
+            @Override
+            public int compare(ComputeResult o1, ComputeResult o2) {
+                Float identification1 = o1.getIdentification();
+                Float identification2 = o2.getIdentification();
+                return identification2.compareTo(identification1);
+            }
+        });
+        computeResultList = computeResultList.subList(0, 5);
     }
 
     /**
@@ -351,8 +358,6 @@ public class NumideServiceImpl implements NumideService {
     }
 
 
-
-
     /**
      * @Author: Xiongruijie
      * @Param: List<ComputeResult> computeResultList, InputFeature inputFeature
@@ -366,487 +371,487 @@ public class NumideServiceImpl implements NumideService {
         Map<BiochemicalTest, InconsistentRecord> inconsistentRecordMap = new HashMap<BiochemicalTest, InconsistentRecord>();
         // 创建游标
         int index = 0;
-        for (ComputeResult computeResult:computeResultList){
+        for (ComputeResult computeResult : computeResultList) {
             // 遍历ResultList
             // 获得当前result的strain_test对象
             StrainTest strainTest = strainTestRepository.getOne(computeResult.getStrainId());
             // 遍历24个生化实验是否有不符合阴/阳的情况
             //            Phe  7
-            if((strainTest.getExperiment7()>75 & inputFeature.getPhe() == '-')|(strainTest.getExperiment7()<25 & inputFeature.getPhe() == '+')){
+            if ((strainTest.getExperiment7() > 75 & inputFeature.getPhe() == '-') | (strainTest.getExperiment7() < 25 & inputFeature.getPhe() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(7);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(7))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(7))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment7())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment7())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Xyl  47
-            if((strainTest.getExperiment47()>75 & inputFeature.getXyl() == '-')|(strainTest.getExperiment47()<25 & inputFeature.getXyl() == '+')){
+            if ((strainTest.getExperiment47() > 75 & inputFeature.getXyl() == '-') | (strainTest.getExperiment47() < 25 & inputFeature.getXyl() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(47);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(47))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(47))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment47())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment47())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Raf  41
-            if((strainTest.getExperiment41()>75 & inputFeature.getRaf() == '-')|(strainTest.getExperiment41()<25 & inputFeature.getRaf() == '+')){
+            if ((strainTest.getExperiment41() > 75 & inputFeature.getRaf() == '-') | (strainTest.getExperiment41() < 25 & inputFeature.getRaf() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(41);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(47))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(41))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment41())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment41())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Ind  1
-            if((strainTest.getExperiment1()>75 & inputFeature.getInd() == '-')|(strainTest.getExperiment1()<25 & inputFeature.getInd() == '+')){
+            if ((strainTest.getExperiment1() > 75 & inputFeature.getInd() == '-') | (strainTest.getExperiment1() < 25 & inputFeature.getInd() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(1);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(1))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(1))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment1())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment1())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Suc  45
-            if((strainTest.getExperiment45()>75 & inputFeature.getSuc() == '-')|(strainTest.getExperiment45()<25 & inputFeature.getSuc() == '+')){
+            if ((strainTest.getExperiment45() > 75 & inputFeature.getSuc() == '-') | (strainTest.getExperiment45() < 25 & inputFeature.getSuc() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(45);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(45))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(45))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment45())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment45())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Orn  10
-            if((strainTest.getExperiment10()>75 & inputFeature.getOrn() == '-')|(strainTest.getExperiment10()<25 & inputFeature.getOrn() == '+')){
+            if ((strainTest.getExperiment10() > 75 & inputFeature.getOrn() == '-') | (strainTest.getExperiment10() < 25 & inputFeature.getOrn() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(10);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(10))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(10))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment10())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest
                     );
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment10())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Lac  34
-            if((strainTest.getExperiment34()>75 & inputFeature.getLac() == '-')|(strainTest.getExperiment34()<25 & inputFeature.getLac() == '+')){
+            if ((strainTest.getExperiment34() > 75 & inputFeature.getLac() == '-') | (strainTest.getExperiment34() < 25 & inputFeature.getLac() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(34);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(34))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(34))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment34())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment34())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            ONPG  22
-            if((strainTest.getExperiment22()>75 & inputFeature.getONPG() == '-')|(strainTest.getExperiment22()<25 & inputFeature.getONPG() == '+')){
+            if ((strainTest.getExperiment22() > 75 & inputFeature.getONPG() == '-') | (strainTest.getExperiment22() < 25 & inputFeature.getONPG() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(22);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(22))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(22))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment22())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment22())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Ure  6
-            if((strainTest.getExperiment6()>75 & inputFeature.getUre() == '-')|(strainTest.getExperiment6()<25 & inputFeature.getUre() == '+')){
+            if ((strainTest.getExperiment6() > 75 & inputFeature.getUre() == '-') | (strainTest.getExperiment6() < 25 & inputFeature.getUre() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(6);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(6))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(6))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment6())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment6())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Cit  4
-            if((strainTest.getExperiment4()>75 & inputFeature.getCit() == '-')|(strainTest.getExperiment4()<25 & inputFeature.getCit() == '+')){
+            if ((strainTest.getExperiment4() > 75 & inputFeature.getCit() == '-') | (strainTest.getExperiment4() < 25 & inputFeature.getCit() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(4);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(4))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(4))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment4())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment4())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Malt  35
-            if((strainTest.getExperiment35()>75 & inputFeature.getMalt() == '-')|(strainTest.getExperiment35()<25 & inputFeature.getMalt() == '+')){
+            if ((strainTest.getExperiment35() > 75 & inputFeature.getMalt() == '-') | (strainTest.getExperiment35() < 25 & inputFeature.getMalt() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(35);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(35))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(35))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment35())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment35())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Lys  8
-            if((strainTest.getExperiment8()>75 & inputFeature.getLys() == '-')|(strainTest.getExperiment8()<25 & inputFeature.getLys() == '+')){
+            if ((strainTest.getExperiment8() > 75 & inputFeature.getLys() == '-') | (strainTest.getExperiment8() < 25 & inputFeature.getLys() == '+')) {
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(8);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(8))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(8))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment8()));
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment8()));
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Malo  14
-            if((strainTest.getExperiment14()>75 & inputFeature.getMalo() == '-')|(strainTest.getExperiment14()<25 & inputFeature.getMalo() == '+')){
+            if ((strainTest.getExperiment14() > 75 & inputFeature.getMalo() == '-') | (strainTest.getExperiment14() < 25 & inputFeature.getMalo() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(14);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(14))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(14))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment14())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment14())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Sor  44
-            if((strainTest.getExperiment44()>75 & inputFeature.getSor() == '-')|(strainTest.getExperiment44()<25 & inputFeature.getSor() == '+')){
+            if ((strainTest.getExperiment44() > 75 & inputFeature.getSor() == '-') | (strainTest.getExperiment44() < 25 & inputFeature.getSor() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(44);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(44))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(44))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment44())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment44())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Dul  30
-            if((strainTest.getExperiment30()>75 & inputFeature.getDul() == '-')|(strainTest.getExperiment30()<25 & inputFeature.getDul() == '+')){
+            if ((strainTest.getExperiment30() > 75 & inputFeature.getDul() == '-') | (strainTest.getExperiment30() < 25 & inputFeature.getDul() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(30);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(30))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(30))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment30())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment30())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Ara  27
-            if((strainTest.getExperiment27() > 75 & inputFeature.getAra() == '-')|(strainTest.getExperiment27()<25 & inputFeature.getAra() == '+')){
+            if ((strainTest.getExperiment27() > 75 & inputFeature.getAra() == '-') | (strainTest.getExperiment27() < 25 & inputFeature.getAra() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(27);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(27))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(27))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment27())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment27())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Mel  38
-            if((strainTest.getExperiment38()>75 & inputFeature.getMel() == '-')|(strainTest.getExperiment38()<25 & inputFeature.getMel() == '+')){
+            if ((strainTest.getExperiment38() > 75 & inputFeature.getMel() == '-') | (strainTest.getExperiment38() < 25 & inputFeature.getMel() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(38);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(38))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(38))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment38())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment38())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Rha  42
-            if((strainTest.getExperiment42()>75 & inputFeature.getRha() == '-')|(strainTest.getExperiment42()<25 & inputFeature.getRha() == '+')){
+            if ((strainTest.getExperiment42() > 75 & inputFeature.getRha() == '-') | (strainTest.getExperiment42() < 25 & inputFeature.getRha() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(42);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(42))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(42))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment42())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment42())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Esc  15
-            if((strainTest.getExperiment15()>75 & inputFeature.getEsc() == '-')|(strainTest.getExperiment15()<25 & inputFeature.getEsc() == '+')){
+            if ((strainTest.getExperiment15() > 75 & inputFeature.getEsc() == '-') | (strainTest.getExperiment15() < 25 & inputFeature.getEsc() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(15);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(15))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(15))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment15())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment15())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            MR  2
-            if((strainTest.getExperiment2()>75 & inputFeature.getMR() == '-')|(strainTest.getExperiment2()<25 & inputFeature.getMR() == '+')){
+            if ((strainTest.getExperiment2() > 75 & inputFeature.getMR() == '-') | (strainTest.getExperiment2() < 25 & inputFeature.getMR() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(2);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(2))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(2))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment2())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment2())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            H2S  5
-            if((strainTest.getExperiment5()>75 & inputFeature.getH2S() == '-')|(strainTest.getExperiment5()<25 & inputFeature.getH2S() == '+')){
+            if ((strainTest.getExperiment5() > 75 & inputFeature.getH2S() == '-') | (strainTest.getExperiment5() < 25 & inputFeature.getH2S() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(5);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(5))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(5))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment5())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment5())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Tre  46
-            if((strainTest.getExperiment46()>75 & inputFeature.getTre()== '-')|(strainTest.getExperiment46()<25 & inputFeature.getTre() == '+')){
+            if ((strainTest.getExperiment46() > 75 & inputFeature.getTre() == '-') | (strainTest.getExperiment46() < 25 & inputFeature.getTre() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(46);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(46))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(46))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment46())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment46())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Cel  29
-            if((strainTest.getExperiment29()>75 & inputFeature.getCel() == '-')|(strainTest.getExperiment29()<25 & inputFeature.getCel() == '+')){
+            if ((strainTest.getExperiment29() > 75 & inputFeature.getCel() == '-') | (strainTest.getExperiment29() < 25 & inputFeature.getCel() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(29);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(29))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(29))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment29())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment29())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
             }
 //            Ox  21
-            if((strainTest.getExperiment21()>75 & inputFeature.getOx() == '-')|(strainTest.getExperiment21()<25 & inputFeature.getOx() == '+')){
+            if ((strainTest.getExperiment21() > 75 & inputFeature.getOx() == '-') | (strainTest.getExperiment21() < 25 & inputFeature.getOx() == '+')) {
                 // 改
                 BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(21);
-                if(!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(21))){
+                if (!inconsistentRecordMap.containsKey(biochemicalTestRepository.getOne(21))) {
                     // 创建新记录对象
                     InconsistentRecord inconsistentRecord = new InconsistentRecord();
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
                     inconsistentRecord.setBiochemicalTest(biochemicalTest);
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment21())); // 改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
-                }else {
+                } else {
                     InconsistentRecord inconsistentRecord = inconsistentRecordMap.get(biochemicalTest);
                     Class inconsistentRecordClass = inconsistentRecord.getClass();
-                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum"+ index, Integer.class);
+                    Method methodSet = inconsistentRecordClass.getDeclaredMethod("setNum" + index, Integer.class);
                     methodSet.invoke(inconsistentRecord, (strainTest.getExperiment21())); //改
                     inconsistentRecordMap.put(biochemicalTest, inconsistentRecord);
                 }
@@ -867,32 +872,32 @@ public class NumideServiceImpl implements NumideService {
      * @time: 5:30
      * @description:
      */
-    public String getResultEvaluation(List<ComputeResult> computeResultList){
-        List<ComputeResult> top3Result = computeResultList.subList(0,3);
+    public String getResultEvaluation(List<ComputeResult> computeResultList) {
+        List<ComputeResult> top3Result = computeResultList.subList(0, 3);
         // 第一种情况：前三条目族类完全相同
-        if((strainRepository.getOne(top3Result.get(0).getStrainId()).getStrainClass().equals(strainRepository.getOne(top3Result.get(1).getStrainId()).getStrainClass()))&(strainRepository.getOne(top3Result.get(0).getStrainId()).getStrainClass().equals(strainRepository.getOne(top3Result.get(2).getStrainId()).getStrainClass()))){
-            if (top3Result.get(0).getIdentification() < 80){
-                if ((top3Result.get(0).getIdentification()+top3Result.get(1).getIdentification()+top3Result.get(2).getIdentification()) > 80){
+        if ((strainRepository.getOne(top3Result.get(0).getStrainId()).getStrainClass().equals(strainRepository.getOne(top3Result.get(1).getStrainId()).getStrainClass())) & (strainRepository.getOne(top3Result.get(0).getStrainId()).getStrainClass().equals(strainRepository.getOne(top3Result.get(2).getStrainId()).getStrainClass()))) {
+            if (top3Result.get(0).getIdentification() < 80) {
+                if ((top3Result.get(0).getIdentification() + top3Result.get(1).getIdentification() + top3Result.get(2).getIdentification()) > 80) {
                     return "很好的鉴定结果";
                 }
-            }else {
+            } else {
                 return "很好的鉴定结果";
             }
         }
         // 第二种情况：前三条目族不相同
-        if ((top3Result.get(0).getIdentification()>=95)&(top3Result.get(0).getT_value()>=75)){
+        if ((top3Result.get(0).getIdentification() >= 95) & (top3Result.get(0).getT_value() >= 75)) {
             return "极好的鉴定结果";
-        }else if ((top3Result.get(0).getIdentification()>=80)&(top3Result.get(0).getT_value()>=50)){
+        } else if ((top3Result.get(0).getIdentification() >= 80) & (top3Result.get(0).getT_value() >= 50)) {
             return "很好的鉴定结果";
-        }else if ((top3Result.get(0).getIdentification()>=60)&(top3Result.get(0).getT_value()>=50)){
+        } else if ((top3Result.get(0).getIdentification() >= 60) & (top3Result.get(0).getT_value() >= 50)) {
             return "好的鉴定结果";
-        }else if((top3Result.get(0).getIdentification()>=90)&(top3Result.get(0).getT_value()>=0)||
-                (top3Result.get(0).getIdentification()>=80)&(top3Result.get(0).getIdentification()<=90)&(top3Result.get(0).getT_value()>=0.01)||
-                (top3Result.get(0).getIdentification()>=60)&(top3Result.get(0).getIdentification()<=80)&(top3Result.get(0).getT_value()>=10)){
+        } else if ((top3Result.get(0).getIdentification() >= 90) & (top3Result.get(0).getT_value() >= 0) ||
+                (top3Result.get(0).getIdentification() >= 80) & (top3Result.get(0).getIdentification() <= 90) & (top3Result.get(0).getT_value() >= 0.01) ||
+                (top3Result.get(0).getIdentification() >= 60) & (top3Result.get(0).getIdentification() <= 80) & (top3Result.get(0).getT_value() >= 10)) {
             return "可接受的鉴定结果";
-        }else if((top3Result.get(0).getIdentification()>=60)&(top3Result.get(0).getIdentification()<=80)&(top3Result.get(0).getT_value()>=0.01)){
+        } else if ((top3Result.get(0).getIdentification() >= 60) & (top3Result.get(0).getIdentification() <= 80) & (top3Result.get(0).getT_value() >= 0.01)) {
             return "可疑的鉴定结果";
-        }else if ((top3Result.get(0).getIdentification()<60)&(top3Result.get(0).getT_value()<=0.01)){
+        } else if ((top3Result.get(0).getIdentification() < 60) & (top3Result.get(0).getT_value() <= 0.01)) {
             return "不可接受的鉴定结果";
         }
 
@@ -910,13 +915,13 @@ public class NumideServiceImpl implements NumideService {
      * @description: List<ComputeResult> computeResultList size必须为5
      */
     public Supplement getSupplement(List<ComputeResult> computeResultList) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        if (computeResultList.size()!=5){
+        if (computeResultList.size() != 5) {
             log.error("错误结果列表大小不为5！");
             return null;
         }
 
         List<SupplementCompute> supplementComputeList = new ArrayList<>();
-        for (ComputeResult computeResult:computeResultList){
+        for (ComputeResult computeResult : computeResultList) {
             SupplementCompute supplementCompute = new SupplementCompute();
             supplementCompute.ExtractFeature(strainTestRepository.getOne(computeResult.getStrainId()));
             supplementComputeList.add(supplementCompute);
@@ -928,30 +933,30 @@ public class NumideServiceImpl implements NumideService {
         Class<? extends SupplementCompute> supplementComputeClass = SupplementCompute.class;
 
         List<SupplementResult> supplementResultList = new ArrayList<>();
-        for (int i = 1; i <= 47; i++){
-            Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment"+i, null);
+        for (int i = 1; i <= 47; i++) {
+            Method methodGet = supplementComputeClass.getDeclaredMethod("getExperiment" + i, null);
             SupplementResult supplementResult = new SupplementResult();
             // supplementResult是关于5个菌群47个实验补充实验评判标准结果集
             // 设置实验id
             supplementResult.setStrain_id(i);
 
-            for(int j = 0; j<5;j++){
+            for (int j = 0; j < 5; j++) {
                 // 第i个实验的第j个结果
-                if (supplementResult.getNaN() == true){
+                if (supplementResult.getNaN() == true) {
                     continue;
                 }
-                if((Character)methodGet.invoke(supplementComputeList.get(j),null) == '?'){
+                if ((Character) methodGet.invoke(supplementComputeList.get(j), null) == '?') {
                     supplementResult.setNaN(true);
-                }else if ((Character)methodGet.invoke(supplementComputeList.get(j),null) == '+'){
-                    if(supplementResult.getPositive()==0){
+                } else if ((Character) methodGet.invoke(supplementComputeList.get(j), null) == '+') {
+                    if (supplementResult.getPositive() == 0) {
                         supplementResult.setPositive(1);
-                    }else {
+                    } else {
                         supplementResult.setPositive(supplementResult.getPositive() + 1);
                     }
-                }else{
-                    if(supplementResult.getNegative()==null){
+                } else {
+                    if (supplementResult.getNegative() == null) {
                         supplementResult.setNegative(1);
-                    }else {
+                    } else {
                         supplementResult.setNegative(supplementResult.getNegative() + 1);
                     }
                 }
@@ -959,26 +964,34 @@ public class NumideServiceImpl implements NumideService {
             supplementResult.getValue();
             supplementResultList.add(supplementResult);
         }
-        Collections.sort(supplementResultList);
+//        Collections.sort(supplementResultList);
+        supplementResultList.sort(new Comparator<SupplementResult>() {
+            @Override
+            public int compare(SupplementResult o1, SupplementResult o2) {
+                Integer o1Value = o1.getValue();
+                Integer o2Value = o2.getValue();
+                return o2Value.compareTo(o1Value);
+            }
+        });
         SupplementResult supplementResult = supplementResultList.get(0);
         Integer topId = supplementResult.getStrain_id();
         Supplement supplement = new Supplement();
         BiochemicalTest biochemicalTest = biochemicalTestRepository.getOne(supplementResult.getStrain_id());
         supplement.setBiochemicalTest(biochemicalTest);
 
-        Method methodGet0 = StrainTest.class.getDeclaredMethod("getExperiment"+ topId,null);
+        Method methodGet0 = StrainTest.class.getDeclaredMethod("getExperiment" + topId, null);
         supplement.setNum0((Integer) methodGet0.invoke(strainTestRepository.getOne(computeResultList.get(0).getStrainId())));
 
-        Method methodGet1 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        Method methodGet1 = StrainTest.class.getDeclaredMethod("getExperiment" + topId, null);
         supplement.setNum1((Integer) methodGet1.invoke(strainTestRepository.getOne(computeResultList.get(1).getStrainId())));
 
-        Method methodGet2 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        Method methodGet2 = StrainTest.class.getDeclaredMethod("getExperiment" + topId, null);
         supplement.setNum2((Integer) methodGet2.invoke(strainTestRepository.getOne(computeResultList.get(2).getStrainId())));
 
-        Method methodGet3 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        Method methodGet3 = StrainTest.class.getDeclaredMethod("getExperiment" + topId, null);
         supplement.setNum3((Integer) methodGet3.invoke(strainTestRepository.getOne(computeResultList.get(3).getStrainId())));
 
-        Method methodGet4 = StrainTest.class.getDeclaredMethod("getExperiment"+topId,null);
+        Method methodGet4 = StrainTest.class.getDeclaredMethod("getExperiment" + topId, null);
         supplement.setNum4((Integer) methodGet4.invoke(strainTestRepository.getOne(computeResultList.get(4).getStrainId())));
 
         return supplement;
@@ -1007,7 +1020,7 @@ public class NumideServiceImpl implements NumideService {
         // 存结果
         // 第一个结果 存numideResultElementList到NumideResult
         List<NumideResultElement> numideResultElementList = new ArrayList<NumideResultElement>();
-        for (ComputeResult computeResult:computeResultList){
+        for (ComputeResult computeResult : computeResultList) {
             NumideResultElement numideResultElement = new NumideResultElement();
             numideResultElement.setStrain(strainRepository.getOne(computeResult.getStrainId()));
             numideResultElement.setComputeResult(computeResult);
@@ -1038,19 +1051,19 @@ public class NumideServiceImpl implements NumideService {
         OutputResultElement StrainName = new OutputResultElement();
 
         // 英文名
-        for (int i = 1; i<6;i++){
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
-            Method methodGet = OutputResultElement.class.getDeclaredMethod("getElement"+i,null);
-            methodSet.invoke(StrainName,numideResult.getNumideResultElementList().get(i-1).getStrain().getStrainName());
+        for (int i = 1; i < 6; i++) {
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            Method methodGet = OutputResultElement.class.getDeclaredMethod("getElement" + i, null);
+            methodSet.invoke(StrainName, numideResult.getNumideResultElementList().get(i - 1).getStrain().getStrainName());
         }
         outputResultElementList.add(StrainName);
 
 
         // 中文名
         OutputResultElement StrainChName = new OutputResultElement();
-        for (int i = 1; i<6;i++){
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
-            methodSet.invoke(StrainChName,numideResult.getNumideResultElementList().get(i-1).getStrain().getStrainChName());
+        for (int i = 1; i < 6; i++) {
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            methodSet.invoke(StrainChName, numideResult.getNumideResultElementList().get(i - 1).getStrain().getStrainChName());
         }
         outputResultElementList.add(StrainChName);
         // strainName 设置
@@ -1060,27 +1073,27 @@ public class NumideServiceImpl implements NumideService {
         List<OutputResultElement> computeValue = new ArrayList<>();
         // 鉴定百分数
         OutputResultElement identification = new OutputResultElement();
-        for (int i = 0; i < 6; i++){
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
-            if (i == 0){
-                methodSet.invoke(identification,"鉴定百分数：");
+        for (int i = 0; i < 6; i++) {
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            if (i == 0) {
+                methodSet.invoke(identification, "鉴定百分数：");
                 continue;
             }
-            methodSet.invoke(identification,numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification().toString()+"%");
+            methodSet.invoke(identification, numideResult.getNumideResultElementList().get(i - 1).getComputeResult().getIdentification().toString() + "%");
         }
         computeValue.add(identification);
         // T值
         OutputResultElement T_value = new OutputResultElement();
-        for (int i = 0; i < 6; i++){
-            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement"+i,null);
-            if (i == 0){
-                methodSet.invoke(T_value,"T值：");
+        for (int i = 0; i < 6; i++) {
+            Method methodSet = OutputResultElement.class.getDeclaredMethod("setElement" + i, String.class);
+            if (i == 0) {
+                methodSet.invoke(T_value, "T值：");
                 continue;
             }
-            if (numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification()<0.01){
-                methodSet.invoke(T_value,"<0.01%");
-            }else {
-                methodSet.invoke(T_value,numideResult.getNumideResultElementList().get(i-1).getComputeResult().getIdentification().toString()+"%");
+            if (numideResult.getNumideResultElementList().get(i - 1).getComputeResult().getT_value() < 0.01) {
+                methodSet.invoke(T_value, "<0.01%");
+            } else {
+                methodSet.invoke(T_value, numideResult.getNumideResultElementList().get(i - 1).getComputeResult().getT_value().toString() + "%");
             }
         }
         computeValue.add(T_value);
@@ -1090,15 +1103,34 @@ public class NumideServiceImpl implements NumideService {
         Map<BiochemicalTest, InconsistentRecord> inconsistentRecordMap = numideResult.getInconsistentRecordMap();
         List<OutputResultElement> inconsistent = new ArrayList<>();
 
-        for (Map.Entry<BiochemicalTest, InconsistentRecord> entry: inconsistentRecordMap.entrySet()){
+        for (Map.Entry<BiochemicalTest, InconsistentRecord> entry : inconsistentRecordMap.entrySet()) {
             OutputResultElement inconsistentElement = new OutputResultElement();
             inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
-//            inconsistentElement.setElement1();
-            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
-            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
-            inconsistentElement.setElement0(entry.getValue().getBiochemicalTest().getBiochemicalCh());
+            inconsistentElement.setElement1((entry.getValue().getNum0() != null) ? entry.getValue().getNum0().toString() : null);
+            inconsistentElement.setElement2((entry.getValue().getNum1() != null) ? entry.getValue().getNum1().toString() : null);
+            inconsistentElement.setElement3((entry.getValue().getNum2() != null) ? entry.getValue().getNum2().toString() : null);
+            inconsistentElement.setElement4((entry.getValue().getNum3() != null) ? entry.getValue().getNum3().toString() : null);
+            inconsistentElement.setElement5((entry.getValue().getNum4() != null) ? entry.getValue().getNum4().toString() : null);
+            inconsistent.add(inconsistentElement);
         }
+        outputResult.setInconsistent(inconsistent);
+        // 补充实验
+        List<OutputResultElement> supplementList = new ArrayList<>();
+        OutputResultElement supplement = new OutputResultElement();
+        Supplement numideResultSupplementsupplement = numideResult.getSupplement();
+        supplement.setElement0(numideResultSupplementsupplement.getBiochemicalTest().getBiochemicalCh());
+        supplement.setElement1(numideResultSupplementsupplement.getNum0().toString());
+        supplement.setElement2(numideResultSupplementsupplement.getNum1().toString());
+        supplement.setElement3(numideResultSupplementsupplement.getNum2().toString());
+        supplement.setElement4(numideResultSupplementsupplement.getNum3().toString());
+        supplement.setElement5(numideResultSupplementsupplement.getNum4().toString());
+        supplementList.add(supplement);
+        outputResult.setSupplement(supplementList);
 
-        return null;
+        //结果评价
+        outputResult.setResultEvaluation("结果评价: " + numideResult.getResultEvaluation() + ": " + StrainName.getElement1());
+
+
+        return outputResult;
     }
 }

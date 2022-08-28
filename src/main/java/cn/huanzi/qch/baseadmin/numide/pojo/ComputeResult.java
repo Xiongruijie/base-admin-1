@@ -3,7 +3,7 @@ package cn.huanzi.qch.baseadmin.numide.pojo;
 import lombok.Data;
 
 @Data
-public class ComputeResult implements Comparable<ComputeResult>{
+public class ComputeResult {
 
     private Integer strainId;
 
@@ -11,8 +11,8 @@ public class ComputeResult implements Comparable<ComputeResult>{
 
     private Float T_value = null;
 
-    @Override
-    public int compareTo(ComputeResult o) {
-        return (int) (o.getIdentification() - this.identification);
-    }
+//    @Override
+//    public int compareTo(ComputeResult o) {
+//        return (int) (o.getIdentification() - this.identification);
+//    }
 }
