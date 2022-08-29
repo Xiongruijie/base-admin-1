@@ -25,4 +25,6 @@ public interface NumideService  {
 
     public OutputResultVo getOutputResult(InputFeature inputFeature) throws Exception;
 
+    public InputFeature getInputFeatureFromForm(FormEntity formEntity);
+
 }

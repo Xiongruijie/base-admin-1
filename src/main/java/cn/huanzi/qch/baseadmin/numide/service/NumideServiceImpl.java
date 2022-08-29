@@ -1141,4 +1141,35 @@ public class NumideServiceImpl implements NumideService {
 
         return outputResultVo;
     }
+
+    public InputFeature getInputFeatureFromForm(FormEntity formEntity){
+        InputFeature inputFeature = new InputFeature();
+        inputFeature.setInd(formEntity.getInd().toCharArray()[0]);
+        inputFeature.setSuc(formEntity.getSuc().toCharArray()[0]);
+        inputFeature.setOrn(formEntity.getOrn().toCharArray()[0]);
+        inputFeature.setLac(formEntity.getLac().toCharArray()[0]);
+        inputFeature.setONPG(formEntity.getONPG().toCharArray()[0]);
+        inputFeature.setUre(formEntity.getUre().toCharArray()[0]);
+        inputFeature.setCit(formEntity.getCit().toCharArray()[0]);
+        inputFeature.setMalt(formEntity.getMalt().toCharArray()[0]);
+        inputFeature.setLys(formEntity.getLys().toCharArray()[0]);
+        inputFeature.setMalo(formEntity.getMalo().toCharArray()[0]);
+        inputFeature.setSor(formEntity.getSor().toCharArray()[0]);
+        inputFeature.setDul(formEntity.getDul().toCharArray()[0]);
+        inputFeature.setAra(formEntity.getAra().toCharArray()[0]);
+        inputFeature.setMel(formEntity.getMel().toCharArray()[0]);
+        inputFeature.setRha(formEntity.getRha().toCharArray()[0]);
+        inputFeature.setEsc(formEntity.getEsc().toCharArray()[0]);
+        inputFeature.setMR(formEntity.getMR().toCharArray()[0]);
+        inputFeature.setH2S(formEntity.getH2S().toCharArray()[0]);
+        inputFeature.setTre(formEntity.getTre().toCharArray()[0]);
+        inputFeature.setCel(formEntity.getCel().toCharArray()[0]);
+        inputFeature.setOx(formEntity.getOx().toCharArray()[0]);
+
+
+        return inputFeature;
+    }
+
+
+
 }

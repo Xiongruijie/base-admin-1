@@ -12,18 +12,16 @@
 </head>
 <body>
 <div class="layui-row layui-col-space15">
-
-
-
-    <form class="layui-form"  id="inputForm" name="form" method="post" target="hidden">
+    <form class="layui-form" id="inputForm" name="form" target="hidden" method="post">
         <!--    输入信息    -->
         <fieldset class="layui-elem-field">
             <legend>信息</legend>
             <div class="layui-row layui-col-space15">
                 <!--    时间选择-->
-                    <!--    表单不刷新    -->
-                    <iframe name="hidden" style="display:none;"></iframe>
-                <div class="layui-col-md4">
+                <!--    表单不刷新    -->
+                <iframe name="hidden" style="display:none;"></iframe>
+                <!-------------------------------------------->
+                <div class="layui-col-md3">
                     <div class="layui-inline">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-block">
@@ -32,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
                     <div class="layui-inline">
                         <label class="layui-form-label">日期</label>
                         <div class="layui-input-block">
@@ -43,30 +41,32 @@
                 </div>
 
                 <!--    样本类型-->
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
                     <label class="layui-form-label">样本类型</label>
                     <div class="layui-input-block">
-                        <input type="text" name="sampleType" required  lay-verify="required" placeholder="请输入样本类型" autocomplete="off" class="layui-input">
+                        <input type="text" name="sampleType" required lay-verify="required" placeholder="请输入样本类型"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <!--    样本编号-->
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
                     <label class="layui-form-label">样本编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="sampleNumber" required  lay-verify="required" placeholder="请输入样本编号" autocomplete="off" class="layui-input">
+                        <input type="text" name="sampleNumber" required lay-verify="required" placeholder="请输入样本编号"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
             <div class="layui-col-md15">
                 <label class="layui-form-label">来源</label>
                 <div class="layui-input-block">
-                    <input type="text" name="sampleSource"    placeholder="" autocomplete="off" class="layui-input">
+                    <input type="text" name="sampleSource" placeholder="" autocomplete="on" class="layui-input">
                 </div>
             </div>
             <div class="layui-col-md15">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                    <input type="text" name="remark"    placeholder="" autocomplete="off" class="layui-input">
+                    <input type="text" name="remark"    placeholder="" autocomplete="on" class="layui-input">
                 </div>
             </div>
         </fieldset>
@@ -83,7 +83,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="10" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="10" th:value="0" name="one" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(111,121,131,10)" onpaste="after_input(111,121,131,10)">
                             </div>
                             <div class="layui-card-body">
@@ -91,18 +91,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="111" value="-" onclick="button_click(111,111,121,131,10)">
+                                                <input type="text button" name="Phe" class="layui-btn layui-btn-xs button-width" id="111" value="-" onclick="button_click(111,111,121,131,10)" >
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="121" value="-" onclick="button_click(121,111,121,131,10)">
+                                                <input type="text button" name="Xyl" class="layui-btn layui-btn-xs button-width" id="121" value="-" onclick="button_click(121,111,121,131,10)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="131" value="-" onclick="button_click(131,111,121,131,10)">
+                                                <input type="text button" name="Raf" class="layui-btn layui-btn-xs button-width" id="131" value="-" onclick="button_click(131,111,121,131,10)">
                                                 <br>
                                                 4
                                             </div>
@@ -127,7 +127,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="20" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="20" th:value="0" name="two" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(211,221,231,20)" onpaste="after_input(211,221,231,20)">
                             </div>
                             <div class="layui-card-body">
@@ -135,18 +135,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="211" value="-" onclick="button_click(211,211,221,231,20)">
+                                                <input type="text button" name="Ind" class="layui-btn layui-btn-xs button-width" id="211" value="-" onclick="button_click(211,211,221,231,20)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="221" value="-" onclick="button_click(221,211,221,231,20)">
+                                                <input type="text button" name="Suc" class="layui-btn layui-btn-xs button-width" id="221" value="-" onclick="button_click(221,211,221,231,20)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="231" value="-" onclick="button_click(231,211,221,231,20)">
+                                                <input type="text button" name="Orn" class="layui-btn layui-btn-xs button-width" id="231" value="-" onclick="button_click(231,211,221,231,20)">
                                                 <br>
                                                 4
                                             </div>
@@ -170,7 +170,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="30" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="30" th:value="0" name="three" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(311,321,331,30)" onpaste="after_input(311,321,331,30)">
                             </div>
                             <div class="layui-card-body">
@@ -178,18 +178,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="311" value="-" onclick="button_click(311,311,321,331,30)">
+                                                <input type="button text" name="Lac" class="layui-btn layui-btn-xs button-width" id="311" value="-" onclick="button_click(311,311,321,331,30)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="321" value="-" onclick="button_click(321,311,321,331,30)">
+                                                <input type="button text" name="ONPG" class="layui-btn layui-btn-xs button-width" id="321" value="-" onclick="button_click(321,311,321,331,30)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="331" value="-" onclick="button_click(331,311,321,331,30)">
+                                                <input type="button text" name="Ure" class="layui-btn layui-btn-xs button-width" id="331" value="-" onclick="button_click(331,311,321,331,30)">
                                                 <br>
                                                 4
                                             </div>
@@ -213,7 +213,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="40" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="40" th:value="0" name="four" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(411,421,431,40)" onpaste="after_input(411,421,431,40)">
                             </div>
                             <div class="layui-card-body">
@@ -221,18 +221,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="411" value="-" onclick="button_click(411,411,421,431,40)">
+                                                <input type="button text" name="Cit" class="layui-btn layui-btn-xs button-width" id="411" value="-" onclick="button_click(411,411,421,431,40)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="421" value="-" onclick="button_click(421,411,421,431,40)">
+                                                <input type="button text" name="Malt" class="layui-btn layui-btn-xs button-width" id="421" value="-" onclick="button_click(421,411,421,431,40)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="431" value="-" onclick="button_click(431,411,421,431,40)">
+                                                <input type="button text" name="Lys" class="layui-btn layui-btn-xs button-width" id="431" value="-" onclick="button_click(431,411,421,431,40)">
                                                 <br>
                                                 4
                                             </div>
@@ -256,7 +256,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="50" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="50" th:value="0" name="five" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(511,521,531,50)" onpaste="after_input(511,521,531,50)">
                             </div>
                             <div class="layui-card-body">
@@ -264,18 +264,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="511" value="-" onclick="button_click(511,511,521,531,50)">
+                                                <input type="button text" name="Malo" class="layui-btn layui-btn-xs button-width" id="511" value="-" onclick="button_click(511,511,521,531,50)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="521" value="-" onclick="button_click(521,511,521,531,50)">
+                                                <input type="button text" name="Sor" class="layui-btn layui-btn-xs button-width" id="521" value="-" onclick="button_click(521,511,521,531,50)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="531" value="-" onclick="button_click(531,511,521,531,50)">
+                                                <input type="button text" name="Dul" class="layui-btn layui-btn-xs button-width" id="531" value="-" onclick="button_click(531,511,521,531,50)">
                                                 <br>
                                                 4
                                             </div>
@@ -299,7 +299,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="60" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="60" th:value="0" name="six" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(611,621,631,60)" onpaste="after_input(611,621,631,60)">
                             </div>
                             <div class="layui-card-body">
@@ -307,18 +307,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="611" value="-" onclick="button_click(611,611,621,631,60)">
+                                                <input type="button text" name="Ara" class="layui-btn layui-btn-xs button-width" id="611" value="-" onclick="button_click(611,611,621,631,60)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="621" value="-" onclick="button_click(621,611,621,631,60)">
+                                                <input type="button text" name="Mel" class="layui-btn layui-btn-xs button-width" id="621" value="-" onclick="button_click(621,611,621,631,60)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="631" value="-" onclick="button_click(631,611,621,631,60)">
+                                                <input type="button text" name="Rha" class="layui-btn layui-btn-xs button-width" id="631" value="-" onclick="button_click(631,611,621,631,60)">
                                                 <br>
                                                 4
                                             </div>
@@ -331,7 +331,7 @@
                                                 Mel
                                             </div>
                                             <div class="layui-col-md4 button-margin">
-                                                Dul
+                                                Rha
                                             </div>
                                         </div>
                                     </div>
@@ -342,7 +342,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="70" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="70" th:value="0" name="seven" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(711,721,731,70)" onpaste="after_input(711,721,731,70)">
                             </div>
                             <div class="layui-card-body">
@@ -350,18 +350,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="711" value="-" onclick="button_click(711,711,721,731,70)">
+                                                <input type="button text" name="Esc" class="layui-btn layui-btn-xs button-width" id="711" value="-" onclick="button_click(711,711,721,731,70)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="721" value="-" onclick="button_click(721,711,721,731,70)">
+                                                <input type="button text" name="MR" class="layui-btn layui-btn-xs button-width" id="721" value="-" onclick="button_click(721,711,721,731,70)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="731" value="-" onclick="button_click(731,711,721,731,70)">
+                                                <input type="button text" name="H2S" class="layui-btn layui-btn-xs button-width" id="731" value="-" onclick="button_click(731,711,721,731,70)">
                                                 <br>
                                                 4
                                             </div>
@@ -385,7 +385,7 @@
                     <div class="layui-col-md1 numide-input-element-div">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <input type="text" id="80" th:value="0" maxlength="1" autocomplete="off" class="layui-input"
+                                <input type="text" id="80" th:value="0" name="eight" maxlength="1" autocomplete="off" class="layui-input"
                                        onkeyup="after_input(811,821,831,80)" onpaste="after_input(811,821,831,80)">
                             </div>
                             <div class="layui-card-body">
@@ -393,18 +393,18 @@
                                     <div class="layui-row grid-demo grid-demo-bg1">
                                         <div class="layui-col-md12">
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="811" value="-" onclick="button_click(811,811,821,831,80)">
+                                                <input type="button text" name="Tre" class="layui-btn layui-btn-xs button-width" id="811" value="-" onclick="button_click(811,811,821,831,80)">
                                                 <br>
                                                 1
                                             </div>
 
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="821" value="-" onclick="button_click(821,811,821,831,80)">
+                                                <input type="button text" name="Cel" class="layui-btn layui-btn-xs button-width" id="821" value="-" onclick="button_click(821,811,821,831,80)">
                                                 <br>
                                                 2
                                             </div>
                                             <div class="layui-col-md4">
-                                                <input type="button" class="layui-btn layui-btn-xs" id="831" value="-" onclick="button_click(831,811,821,831,80)">
+                                                <input type="button text" name="Ox" class="layui-btn layui-btn-xs button-width" id="831" value="-" onclick="button_click(831,811,821,831,80)">
                                                 <br>
                                                 4
                                             </div>
@@ -451,9 +451,6 @@
                     <button type="button" class="layui-btn layui-btn-primary">退出</button>
                 </div>
             </div>
-
-
-
         </fieldset>
     </form>
     <!--输出-->
@@ -461,68 +458,32 @@
         <legend>结果</legend>
         <table class="layui-table">
             <colgroup>
-                <col width="150">
-                <col width="200">
-                <col>
+                <col >
+                <col >
+                <col >
+                <col >
+                <col >
+                <col >
             </colgroup>
             <thead>
+            <tr th:each="ql:${outputJson.strainName}">
+                <td th:text="${ql.Element0}"></td>
+                <td th:text="${ql.Element0}"></td>
+                <td th:text="${ql.Element0}"></td>
+                <td th:text="${ql.Element0}"></td>
+                <td th:text="${ql.Element0}"></td>
+            </tr>
+            </thead>
+            <thead>
             <tr>
-                <th>昵称</th>
-                <th>加入时间</th>
-                <th>签名</th>
+                <th>数据1</th>
+                <th>数据2</th>
+                <th>数据3</th>
+                <th>数据4</th>
+                <th>数据5</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据1</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据2</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据1</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据2</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据1</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据2</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据1</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据2</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据1</td>
-            </tr>
-            <tr>
-                <td>示例名称</td>
-                <td>日期数据 2016-11-29</td>
-                <td>示例数据2</td>
-            </tr>
 
             </tbody>
         </table>

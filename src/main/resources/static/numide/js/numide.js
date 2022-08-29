@@ -57,7 +57,29 @@ function after_input(symbol_id_1,symbol_id_2,symbol_id_3,input_id){
     }
 }
 function SubmitForm() {
-    // let DateTime = $('#inputDateTime').val();
+
+    let InputForm = $("#inputForm").serializeObject();
+    InputForm.updateTime = commonUtil.getNowTime();
+
+    let opt = {
+      url: "/numide/getForm",
+        contentType: "application/json;charset=UTF-8",
+      type: "POST",
+        data: JSON.stringify(InputForm),
+      dataType: "JSON",
+      success: function (data){
+          console.log("ajax success!");
+          $("outputTable").ajax()
+      },
+        error: function (errorMsg){
+          console.log("error in ajax!")
+        }
+    };
+    $.ajax(opt);
+
+
+
+// let DateTime = $('#inputDateTime').val();
     // let SampleType = $('#sampleType').val();
     // let SampleNumber = $('#sampleNumber').val();
     // let SampleSource = $('#sampleSource').val();
@@ -88,32 +110,7 @@ function SubmitForm() {
     // let Cel = $('#821').val();
     // let Ox = $('#831').val();
 
-    // let serializeObject = $("#sysForm").serializeObject();
-    // //获取编辑器内容
-    // serializeObject.sysNoticeText = sysNoticeTextEdit.getContent();
-    // $.post(ctx + "/sys/sysSetting/save", serializeObject, function (data) {
-    //     layer.msg("修改成功！", {icon: 1, time: 2000}, function () {});
-    //     $("#sysForm").form(data.data);
-    //     $("#sysApiEncrypt").val(data.data.sysApiEncrypt)
-    // });
-    // let InputForm = $("#inputForm").serializeObject();
-    // InputForm.updateTime = commonUtil.getNowTime();
-    // $.post(ctx + "/numide/getForm", InputForm, function (data) {
-    //     layer.msg("提交成功！", {icon: 1, time: 2000}, function () {});
-    //     $("#inputForm").form(data.data);
-    //
-    // }
-    // ,);
 
-
-
-
-
-    // $.post(ctx + "/numide/save", InputForm, function (){
-    //     layer.msg("保存成功", {icon: 1,time: 2000}, function () {});
-    // });
-    // alert("this is not operate");
-    //
     // let opt = {
     //     type: 'post',
     //     url: '/numide',
