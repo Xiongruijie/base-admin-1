@@ -11,6 +11,7 @@ layui.use(['form','laydate'],function (){
 });
 // 添加输入按钮事件，点击按钮后对输入框响应
 function button_click(opt_symbol,symbol_id_1,symbol_id_2,symbol_id_3,input_id) {
+
     let opt_status = document.getElementById(opt_symbol).value;
     if (opt_status == '+') {
         document.getElementById(opt_symbol).value = '-';
@@ -57,6 +58,8 @@ function after_input(symbol_id_1,symbol_id_2,symbol_id_3,input_id){
         document.getElementById(symbol_id_1).value = "-";
     }
 }
+
+
 function SubmitForm() {
 
     let InputForm = $("#inputForm").serializeObject();
@@ -69,9 +72,7 @@ function SubmitForm() {
       dataType: "JSON",
       success: function (data){
           console.log("ajax success!");
-          console.log(data)
-          console.log(data.data.strainName[0].Element1);
-
+          console.log(data);
 
           let strainData = data.data.strainName;
           for(let i = 0; i < data.data.strainName.length; i++){
@@ -130,6 +131,7 @@ function SubmitForm() {
 
               $("#strainTable").append(supplementData);
           }
+          $("#table_refresh").append('<blockquote className="layui-elem-quote layui-quote-nm">'+data.data.ResultEvaluation+'</blockquote>')
       },
         error: function (errorMsg){
           console.log("error in ajax!");
@@ -138,3 +140,53 @@ function SubmitForm() {
     $.ajax(opt);
 }
 
+function saveForm() {
+    // let InputForm = $("#inputForm").serializeObject();
+    // InputForm.updateTime = commonUtil.getNowTime();
+    let filename = commonUtil.getNowTime();
+    // let opt = {
+    //     url: "/numide/getForm",
+    //     contentType: "application/json;charset=UTF-8",
+    //     type: "POST",
+    //     data: JSON.stringify(InputForm),
+    //     dataType: "JSON",
+    //         success: function (data) {
+    //             if (!data) {
+    //                 alert("保存的数据为空");
+    //             }
+    //
+    //             if (typeof data === "object") {
+    //                 data = JSON.stringify(data, undefined, 4);
+    //             }
+    //             var blob = new Blob([data], {type: "text/json"}),
+    //                 e = document.createEvent("MouseEvents"),
+    //                 a = document.createElement("a");
+    //             a.download = filename;
+    //             a.href = window.URL.createObjectURL(blob);
+    //             a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    //         },
+    //     error: function (errorMsg){
+    //         console.log("error in ajax!");
+    //     }
+    // };
+    // $.ajax(opt);
+
+    $('table_refresh').table2excel({
+        filename : filename+".xls", //文件名称
+        name: "Excel Document Name.xlsx",
+        exclude_img: false,//是否导出图片 false导出
+        exclude_links: true,//是否导出链接 false导出
+        exclude_inputs: true//是否导出输入框的值 true导出
+    })
+
+}
+function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}

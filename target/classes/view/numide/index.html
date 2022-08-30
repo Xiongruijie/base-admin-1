@@ -436,16 +436,16 @@
 
                 </div>
                 <div class="layui-col-md2">
-                    <button  class="layui-btn layui-btn-primary" onclick="SubmitForm()">确认</button>
+                    <button  class="layui-btn layui-btn-primary" onclick="SubmitForm()" id="checked">确认</button>
                 </div>
                 <div class="layui-col-md2">
                     <button type="reset" class="layui-btn layui-btn-primary">新实验</button>
                 </div>
                 <div class="layui-col-md2">
-                    <button type="button" class="layui-btn layui-btn-disabled">输出</button>
+                    <button type="button" class="layui-btn layui-btn-primary " id="outputFile" onclick="saveForm()">输出</button>
                 </div>
                 <div class="layui-col-md2">
-                    <button type="button" class="layui-btn layui-btn-disabled">打印</button>
+                    <button type="button" class="layui-btn layui-btn-primary " id="printResult" onclick="printDiv('table_refresh')">打印</button>
                 </div>
                 <div class="layui-col-md2">
                     <button type="button" class="layui-btn layui-btn-primary">退出</button>
@@ -480,6 +480,8 @@
 <!--<script th:src="@{/sys/user/js/user.js}"></script>-->
 <!--<script th:src="@{/sys/menu/js/menu.js}"></script>-->
 <script th:src="@{/numide/js/numide.js}" ></script>
+
+<script th:src="@{/common/html2canvas.js}"></script>
 
 
 </html>
