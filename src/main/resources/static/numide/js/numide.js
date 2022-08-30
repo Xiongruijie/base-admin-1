@@ -7,6 +7,9 @@ layui.use(['form','laydate'],function (){
         elem: '#inputDateTime',
         format: "yyyy-MM-dd"
     });
+    form.on('submit(inputForm)', function (data) {
+
+    })
 });
 // 添加输入按钮事件，点击按钮后对输入框响应
 function button_click(opt_symbol,symbol_id_1,symbol_id_2,symbol_id_3,input_id) {
@@ -60,7 +63,6 @@ function SubmitForm() {
 
     let InputForm = $("#inputForm").serializeObject();
     InputForm.updateTime = commonUtil.getNowTime();
-
     let opt = {
       url: "/numide/getForm",
         contentType: "application/json;charset=UTF-8",
@@ -69,13 +71,28 @@ function SubmitForm() {
       dataType: "JSON",
       success: function (data){
           console.log("ajax success!");
-          $("outputTable").ajax()
+          $.ajax({
+              url: "/numide/getForm",
+              contentType: "application/json;charset=UTF-8",
+              type: "GET",
+              dataType: "JSON",
+              success:function (data) {
+                  let table = $("ResultTable");
+                  table.empty();
+                  // for (let i = 0; i<data.data.strainName.length; i++){
+                  //     let str = "<tr><td>" + data[i].Element0 + "</td><td>" + data[i].Element1 + "</td><td>" + data[i].Element2 + "</td><td>" + data[i].Element3 + "</td><td>" + data[i].Element4 + "</td><td>" + data[i].Element5 +"</td></tr>";
+                  //     table.append(str);
+                  // }
+                  console.log(data)
+              }
+          });
       },
         error: function (errorMsg){
           console.log("error in ajax!")
         }
     };
     $.ajax(opt);
+
 
 
 

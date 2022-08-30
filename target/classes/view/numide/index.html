@@ -456,37 +456,30 @@
     <!--输出-->
     <fieldset class="layui-elem-field ">
         <legend>结果</legend>
-        <table class="layui-table">
-            <colgroup>
-                <col >
-                <col >
-                <col >
-                <col >
-                <col >
-                <col >
-            </colgroup>
-            <thead>
-            <tr th:each="ql:${outputJson.strainName}">
-                <td th:text="${ql.Element0}"></td>
-                <td th:text="${ql.Element0}"></td>
-                <td th:text="${ql.Element0}"></td>
-                <td th:text="${ql.Element0}"></td>
-                <td th:text="${ql.Element0}"></td>
-            </tr>
-            </thead>
-            <thead>
-            <tr>
-                <th>数据1</th>
-                <th>数据2</th>
-                <th>数据3</th>
-                <th>数据4</th>
-                <th>数据5</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="layui-col-space12"  th:fragment="table_refresh" id="table_refresh">
+            <table class="layui-table" id="ResultTable">
+                <colgroup>
+                    <col >
+                    <col >
+                    <col >
+                    <col >
+                    <col >
+                    <col >
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>数据1</th>
+                    <th>数据2</th>
+                    <th>数据3</th>
+                    <th>数据4</th>
+                    <th>数据5</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
     </fieldset>
 </div>

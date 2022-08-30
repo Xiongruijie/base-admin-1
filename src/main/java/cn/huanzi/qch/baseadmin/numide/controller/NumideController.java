@@ -31,30 +31,21 @@ public class NumideController  {
         return new ModelAndView("numide/query");
     }
 
-    // 测试成功
-    @GetMapping("/test")
-    public Result<OutputResultVo> getNumideResult() throws Exception {
-        InputFeature inputFeature = new InputFeature();
-        // 测试使用默认数据 测试完后将输入导入inputfeature
-        OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
-//        NumideResult numideResult = numideService.getNumideResult(inputFeature);
-        System.out.println(outputResultVo);
-        return Result.of(outputResultVo);
-    }
+
 
 //     获取输入信息
     @PostMapping(value = "/getForm")
-    public Result<String > getForm(@RequestBody String str) throws Exception {
+    public Result getForm(@RequestBody String str) throws Exception {
         Gson gson = new Gson();
         FormEntity formEntity = gson.fromJson(str, FormEntity.class);
         InputFeature inputFeature = numideService.getInputFeatureFromForm(formEntity);
-        System.out.println(inputFeature);
         OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
         String outputJson = gson.toJson(outputResultVo);
 
-        System.out.println(outputJson);
-        return Result.of(outputJson);
+        Result response = Result.of(outputJson);
+        return response;
     }
+
 
 //    @GetMapping("/numide/POST?UserName={UserName}&inputDate={inputDate}&sampleType={sampleType}&sampleNumber={sampleNumber}&sampleSource={sampleSource}&remark={remark}&one={one}&two={two}&three={three}&four={four}&five={five}&six={six}&seven={seven}&eight={eight}")
 //    public String getFormEntiy(@PathVariable("UserName") String userName,
@@ -83,5 +74,15 @@ public class NumideController  {
     // sampleNumber=2&
     // sampleSource=2&
     // remark=2
+    // 测试成功
+    @GetMapping("/test")
+    public Result<OutputResultVo> getNumideResult() throws Exception {
+        InputFeature inputFeature = new InputFeature();
+        // 测试使用默认数据 测试完后将输入导入inputfeature
+        OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
+        // NumideResult numideResult = numideService.getNumideResult(inputFeature);
+        System.out.println(outputResultVo);
+        return Result.of(outputResultVo);
+    }
 
 }
