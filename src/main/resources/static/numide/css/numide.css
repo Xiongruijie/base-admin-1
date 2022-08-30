@@ -23,3 +23,9 @@
 .button-width{
     width: 16px;
 }
+.font-for-strain{
+    font-style:italic;
+}
+.table-data-selected{
+    background: #f2f2f2;
+}

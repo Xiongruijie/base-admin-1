@@ -7,9 +7,7 @@ layui.use(['form','laydate'],function (){
         elem: '#inputDateTime',
         format: "yyyy-MM-dd"
     });
-    form.on('submit(inputForm)', function (data) {
 
-    })
 });
 // 添加输入按钮事件，点击按钮后对输入框响应
 function button_click(opt_symbol,symbol_id_1,symbol_id_2,symbol_id_3,input_id) {
@@ -71,92 +69,72 @@ function SubmitForm() {
       dataType: "JSON",
       success: function (data){
           console.log("ajax success!");
+          console.log(data)
+          console.log(data.data.strainName[0].Element1);
 
 
+          let strainData = data.data.strainName;
+          for(let i = 0; i < data.data.strainName.length; i++){
+              let strainName = "<tr><td>"+((strainData[i].hasOwnProperty("Element0"))?strainData[i].Element0:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element1"))?strainData[i].Element1:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element2"))?strainData[i].Element2:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element3"))?strainData[i].Element3:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element4"))?strainData[i].Element4:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element5"))?strainData[i].Element5:"")+"</td><tr>";
+              let strainProfessionalName = "<tr class='font-for-strain'><td>"+((strainData[i].hasOwnProperty("Element0"))?strainData[i].Element0:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element1"))?strainData[i].Element1:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element2"))?strainData[i].Element2:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element3"))?strainData[i].Element3:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element4"))?strainData[i].Element4:"")+"</td>"
+                  +"<td>"+((strainData[i].hasOwnProperty("Element5"))?strainData[i].Element5:"")+"</td><tr>";
+              if (i==0){
+                  $("#strainTable").append(strainProfessionalName);
+              }else {
+                  $("#strainTable").append(strainName);
+              }
+          }
+
+          let computeValue = data.data.computeValue;
+
+          for(let i = 0; i < computeValue.length; i++){
+              let computeValueData = "<tr><td>"+((computeValue[i].hasOwnProperty("Element0"))?computeValue[i].Element0:"")+"</td>"
+                  +"<td>"+((computeValue[i].hasOwnProperty("Element1"))?computeValue[i].Element1:"")+"</td>"
+                  +"<td>"+((computeValue[i].hasOwnProperty("Element2"))?computeValue[i].Element2:"")+"</td>"
+                  +"<td>"+((computeValue[i].hasOwnProperty("Element3"))?computeValue[i].Element3:"")+"</td>"
+                  +"<td>"+((computeValue[i].hasOwnProperty("Element4"))?computeValue[i].Element4:"")+"</td>"
+                  +"<td>"+((computeValue[i].hasOwnProperty("Element5"))?computeValue[i].Element5:"")+"</td><tr>";
+
+                  $("#strainTable").append(computeValueData);
+          }
+          $("#strainTable").append("<tr aria-disabled='true' class='table-data-selected'><td colspan='1'>不一致实验：</td><td></td><td></td><td></td><td></td><td></td></tr>");
+          let inconsistent = data.data.inconsistent;
+          for(let i = 0; i < inconsistent.length; i++){
+              let inconsistentData = "<tr><td>"+((inconsistent[i].hasOwnProperty("Element0"))?inconsistent[i].Element0:"")+"</td>"
+                  +"<td>"+((inconsistent[i].hasOwnProperty("Element1"))?inconsistent[i].Element1:"")+"</td>"
+                  +"<td>"+((inconsistent[i].hasOwnProperty("Element2"))?inconsistent[i].Element2:"")+"</td>"
+                  +"<td>"+((inconsistent[i].hasOwnProperty("Element3"))?inconsistent[i].Element3:"")+"</td>"
+                  +"<td>"+((inconsistent[i].hasOwnProperty("Element4"))?inconsistent[i].Element4:"")+"</td>"
+                  +"<td>"+((inconsistent[i].hasOwnProperty("Element5"))?inconsistent[i].Element5:"")+"</td><tr>";
+
+              $("#strainTable").append(inconsistentData);
+          }
+          $("#strainTable").append("<tr aria-disabled='true' class='table-data-selected'><td colspan='1'>补充生化反应：</td><td></td><td></td><td></td><td></td><td></td></tr>");
+          let supplement = data.data.supplement;
+          for(let i = 0; i < supplement.length; i++){
+              let supplementData = "<tr><td>"+((supplement[i].hasOwnProperty("Element0"))?supplement[i].Element0:"")+"</td>"
+                  +"<td>"+((supplement[i].hasOwnProperty("Element1"))?supplement[i].Element1:"")+"</td>"
+                  +"<td>"+((supplement[i].hasOwnProperty("Element2"))?supplement[i].Element2:"")+"</td>"
+                  +"<td>"+((supplement[i].hasOwnProperty("Element3"))?supplement[i].Element3:"")+"</td>"
+                  +"<td>"+((supplement[i].hasOwnProperty("Element4"))?supplement[i].Element4:"")+"</td>"
+                  +"<td>"+((supplement[i].hasOwnProperty("Element5"))?supplement[i].Element5:"")+"</td><tr>";
+
+              $("#strainTable").append(supplementData);
+          }
       },
         error: function (errorMsg){
           console.log("error in ajax!");
         }
     };
     $.ajax(opt);
-
-
-
-
-// let DateTime = $('#inputDateTime').val();
-    // let SampleType = $('#sampleType').val();
-    // let SampleNumber = $('#sampleNumber').val();
-    // let SampleSource = $('#sampleSource').val();
-    // let Remark = $('#remark').val();
-    //
-    // let Phe = $('#111').val();
-    // let Xyl = $('#121').val();
-    // let Raf = $('#131').val();
-    // let Ind = $('#211').val();
-    // let Suc = $('#221').val();
-    // let Orn = $('#231').val();
-    // let Lac = $('#311').val();
-    // let ONPG = $('#321').val();
-    // let Ure = $('#331').val();
-    // let Cit = $('#411').val();
-    // let Malt = $('#421').val();
-    // let Lys = $('#431').val();
-    // let Malo = $('#511').val();
-    // let Sor = $('#521').val();
-    // let Dul = $('#531').val();
-    // let Ara = $('#611').val();
-    // let Mel = $('#621').val();
-    // let Rha = $('#631').val();
-    // let Esc = $('#711').val();
-    // let MR = $('#721').val();
-    // let H2S = $('#731').val();
-    // let Tre = $('#811').val();
-    // let Cel = $('#821').val();
-    // let Ox = $('#831').val();
-
-
-    // let opt = {
-    //     type: 'post',
-    //     url: '/numide',
-    //     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    //     dataType: 'json',
-    //     data: JSON.stringify(
-    //         {
-    //         Phe: Phe,
-    //         Xyl: Xyl,
-    //         Raf: Raf,
-    //         Ind: Ind,
-    //         Suc: Suc,
-    //         Orn: Orn,
-    //         Lac: Lac,
-    //         ONPG: ONPG,
-    //         Ure: Ure,
-    //         Cit: Cit,
-    //         Malt: Malt,
-    //         Lys: Lys,
-    //         Malo: Malo,
-    //         Sor: Sor,
-    //         Dul: Dul,
-    //         Ara: Ara,
-    //         Mel: Mel,
-    //         Rha: Rha,
-    //         Esc: Esc,
-    //         MR: MR,
-    //         H2S: H2S,
-    //         Tre: Tre,
-    //         Cel: Cel,
-    //         Ox: Ox,
-    //     }
-    //
-    //
-    //     ),
-    //     success: alert("success"),
-    //     error: function (xhr, status, error) {
-    //         console.log("ajax错误！");
-    //     }
-    // };
-    //
-    // $.ajax(opt);
-
 }
 
