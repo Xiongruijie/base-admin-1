@@ -71,24 +71,11 @@ function SubmitForm() {
       dataType: "JSON",
       success: function (data){
           console.log("ajax success!");
-          $.ajax({
-              url: "/numide/getForm",
-              contentType: "application/json;charset=UTF-8",
-              type: "GET",
-              dataType: "JSON",
-              success:function (data) {
-                  let table = $("ResultTable");
-                  table.empty();
-                  // for (let i = 0; i<data.data.strainName.length; i++){
-                  //     let str = "<tr><td>" + data[i].Element0 + "</td><td>" + data[i].Element1 + "</td><td>" + data[i].Element2 + "</td><td>" + data[i].Element3 + "</td><td>" + data[i].Element4 + "</td><td>" + data[i].Element5 +"</td></tr>";
-                  //     table.append(str);
-                  // }
-                  console.log(data)
-              }
-          });
+
+
       },
         error: function (errorMsg){
-          console.log("error in ajax!")
+          console.log("error in ajax!");
         }
     };
     $.ajax(opt);

@@ -7,6 +7,7 @@ import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.service.NumideService;
 import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
 import com.google.gson.Gson;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,15 +36,20 @@ public class NumideController  {
 
 //     获取输入信息
     @PostMapping(value = "/getForm")
-    public Result getForm(@RequestBody String str) throws Exception {
+    public String getForm(@RequestBody String str) throws Exception {
         Gson gson = new Gson();
         FormEntity formEntity = gson.fromJson(str, FormEntity.class);
         InputFeature inputFeature = numideService.getInputFeatureFromForm(formEntity);
         OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
-        String outputJson = gson.toJson(outputResultVo);
 
-        Result response = Result.of(outputJson);
-        return response;
+        Result data = Result.of(outputResultVo);
+        String dataJson = gson.toJson(data);
+        Response response = new Response();
+        response.setMessage(dataJson);
+
+
+
+        return dataJson;
     }
 
 
