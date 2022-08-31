@@ -53,33 +53,6 @@ public class NumideController  {
     }
 
 
-//    @GetMapping("/numide/POST?UserName={UserName}&inputDate={inputDate}&sampleType={sampleType}&sampleNumber={sampleNumber}&sampleSource={sampleSource}&remark={remark}&one={one}&two={two}&three={three}&four={four}&five={five}&six={six}&seven={seven}&eight={eight}")
-//    public String getFormEntiy(@PathVariable("UserName") String userName,
-//                           @PathVariable("inputDate") String inputDate,
-//                           @PathVariable("sampleType") String sampleType,
-//                           @PathVariable("sampleNumber") String sampleNumber,
-//                           @PathVariable("sampleSource") String sampleSource,
-//                           @PathVariable("remark") String remark,
-//                           @PathVariable("one") Integer one,
-//                           @PathVariable("two") Integer two,
-//                           @PathVariable("three") Integer three,
-//                           @PathVariable("four") Integer four,
-//                           @PathVariable("five") Integer five,
-//                           @PathVariable("six") Integer six,
-//                           @PathVariable("seven") Integer seven,
-//                           @PathVariable("eight") Integer eight){
-//        FormEntity formEntity = new FormEntity(userName,inputDate,sampleType,sampleNumber,sampleSource,remark,one,two,three,four,five,six,seven,eight);
-//        System.out.println(formEntity.toString());
-//        return "formEntity";
-//    }
-
-    //http://192.168.154.1:8888/numide/POST?
-    // UserName=544065797%40qq.com&
-    // inputDate=2022-08-05&
-    // sampleType=2&
-    // sampleNumber=2&
-    // sampleSource=2&
-    // remark=2
     // 测试成功
     @GetMapping("/test")
     public Result<OutputResultVo> getNumideResult() throws Exception {

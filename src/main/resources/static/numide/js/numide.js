@@ -62,6 +62,12 @@ function after_input(symbol_id_1,symbol_id_2,symbol_id_3,input_id){
 
 function SubmitForm() {
 
+    $("#strainTable").load(location.href + " #strainTable");
+
+
+
+    $("#outputFile").removeClass("layui-btn-disabled");
+    $("#printResult").removeClass("layui-btn-disabled");
     let InputForm = $("#inputForm").serializeObject();
     InputForm.updateTime = commonUtil.getNowTime();
     let opt = {
@@ -131,7 +137,7 @@ function SubmitForm() {
 
               $("#strainTable").append(supplementData);
           }
-          $("#table_refresh").append('<blockquote className="layui-elem-quote layui-quote-nm">'+data.data.ResultEvaluation+'</blockquote>')
+          $("#strainTable").append("<tr aria-disabled='true' class='table-data-selected'><td colspan='3'>"+data.data.ResultEvaluation+"</td><td></td><td></td><td></td></tr>");
       },
         error: function (errorMsg){
           console.log("error in ajax!");
@@ -141,43 +147,22 @@ function SubmitForm() {
 }
 
 function saveForm() {
-    // let InputForm = $("#inputForm").serializeObject();
-    // InputForm.updateTime = commonUtil.getNowTime();
     let filename = commonUtil.getNowTime();
-    // let opt = {
-    //     url: "/numide/getForm",
-    //     contentType: "application/json;charset=UTF-8",
-    //     type: "POST",
-    //     data: JSON.stringify(InputForm),
-    //     dataType: "JSON",
-    //         success: function (data) {
-    //             if (!data) {
-    //                 alert("保存的数据为空");
-    //             }
-    //
-    //             if (typeof data === "object") {
-    //                 data = JSON.stringify(data, undefined, 4);
-    //             }
-    //             var blob = new Blob([data], {type: "text/json"}),
-    //                 e = document.createEvent("MouseEvents"),
-    //                 a = document.createElement("a");
-    //             a.download = filename;
-    //             a.href = window.URL.createObjectURL(blob);
-    //             a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
-    //         },
-    //     error: function (errorMsg){
-    //         console.log("error in ajax!");
-    //     }
-    // };
-    // $.ajax(opt);
-
-    $('table_refresh').table2excel({
-        filename : filename+".xls", //文件名称
-        name: "Excel Document Name.xlsx",
-        exclude_img: false,//是否导出图片 false导出
+    // $('table_refresh').table2excel({
+    //     filename : filename+".xls", //文件名称
+    //     name: "Excel Document Name.xlsx",
+    //     exclude_img: false,//是否导出图片 false导出
+    //     exclude_links: true,//是否导出链接 false导出
+    //     exclude_inputs: true//是否导出输入框的值 true导出
+    // });
+    $("#table_refresh").table2excel({
+        name: filename,
+        filename: filename+"数据.xls", // do include extension
+        preserveColors: true, // set to true if you want background colors and font colors preserved
         exclude_links: true,//是否导出链接 false导出
         exclude_inputs: true//是否导出输入框的值 true导出
-    })
+    });
+
 
 }
 function printDiv(divName) {

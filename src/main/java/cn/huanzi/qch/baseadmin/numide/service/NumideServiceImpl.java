@@ -3,6 +3,7 @@ package cn.huanzi.qch.baseadmin.numide.service;
 
 import cn.huanzi.qch.baseadmin.numide.pojo.*;
 import cn.huanzi.qch.baseadmin.numide.repository.BiochemicalTestRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.QueryRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainTestRepository;
 import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
@@ -20,6 +21,9 @@ import java.util.*;
 @Service
 @Slf4j
 public class NumideServiceImpl implements NumideService {
+
+    @Autowired
+    private QueryRepository queryRepository;
 
     @Autowired
     private StrainRepository strainRepository;
@@ -1165,6 +1169,37 @@ public class NumideServiceImpl implements NumideService {
         inputFeature.setTre(formEntity.getTre().toCharArray()[0]);
         inputFeature.setCel(formEntity.getCel().toCharArray()[0]);
         inputFeature.setOx(formEntity.getOx().toCharArray()[0]);
+
+        QueryEntity queryEntity = new QueryEntity();
+        queryEntity.setUserName(formEntity.getUserName());
+        queryEntity.setInputDate(formEntity.getInputDate());
+        queryEntity.setSampleType(formEntity.getSampleType());
+        queryEntity.setSampleSource(formEntity.getSampleSource());
+        queryEntity.setRemark(formEntity.getRemark());
+        queryEntity.setInd(formEntity.getInd());
+        queryEntity.setSuc(formEntity.getSuc());
+        queryEntity.setOrn(formEntity.getOrn());
+        queryEntity.setLac(formEntity.getLac());
+        queryEntity.setONPG(formEntity.getONPG());
+        queryEntity.setUre(formEntity.getUre());
+        queryEntity.setCit(formEntity.getCit());
+        queryEntity.setMalt(formEntity.getMalt());
+        queryEntity.setLys(formEntity.getLys());
+        queryEntity.setMalo(formEntity.getMalo());
+        queryEntity.setSor(formEntity.getSor());
+        queryEntity.setDul(formEntity.getDul());
+        queryEntity.setAra(formEntity.getAra());
+        queryEntity.setMel(formEntity.getMel());
+        queryEntity.setRha(formEntity.getRha());
+        queryEntity.setEsc(formEntity.getEsc());
+        queryEntity.setMR(formEntity.getMR());
+        queryEntity.setH2S(formEntity.getH2S());
+        queryEntity.setTre(formEntity.getTre());
+        queryEntity.setCel(formEntity.getCel());
+        queryEntity.setOx(formEntity.getOx());
+
+
+        queryRepository.save(queryEntity);
 
 
         return inputFeature;
