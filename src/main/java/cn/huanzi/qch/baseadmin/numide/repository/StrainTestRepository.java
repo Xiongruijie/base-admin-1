@@ -1,6 +1,6 @@
 package cn.huanzi.qch.baseadmin.numide.repository;
 
-import cn.huanzi.qch.baseadmin.numide.pojo.StrainTest;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.StrainTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

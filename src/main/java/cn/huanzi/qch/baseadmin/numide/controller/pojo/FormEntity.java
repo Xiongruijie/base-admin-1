@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.pojo;
+package cn.huanzi.qch.baseadmin.numide.controller.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FormEntity {
-    String userName;
+    String UserName;
     String inputDate;
     String sampleType;
     String sampleNumber;
@@ -21,9 +21,6 @@ public class FormEntity {
     String remark;
 
     String one;
-    String Phe;
-    String Xyl;
-    String Raf;
     String two;
     String three;
     String four;
@@ -32,7 +29,9 @@ public class FormEntity {
     String seven;
     String eight;
 
-
+    String Phe;
+    String Xyl;
+    String Raf;
     String Ind;
     String Suc;
     String Orn;

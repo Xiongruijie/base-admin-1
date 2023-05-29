@@ -29,3 +29,8 @@
 .table-data-selected{
     background: #f2f2f2;
 }
+@media print {
+    .noPrint{
+        display: none;
+    }
+}

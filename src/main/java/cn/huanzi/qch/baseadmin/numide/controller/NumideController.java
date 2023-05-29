@@ -1,8 +1,10 @@
 package cn.huanzi.qch.baseadmin.numide.controller;
 
 import cn.huanzi.qch.baseadmin.common.pojo.Result;
-import cn.huanzi.qch.baseadmin.numide.pojo.FormEntity;
-import cn.huanzi.qch.baseadmin.numide.pojo.InputFeature;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.FormEntity;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.InputFeature;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.QueryEntity;
+import cn.huanzi.qch.baseadmin.numide.repository.QueryRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.service.NumideService;
 import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/numide/")
 public class NumideController  {
@@ -20,6 +24,8 @@ public class NumideController  {
     public NumideService numideService;
     @Autowired
     public StrainRepository strainRepository;
+    @Autowired
+    public QueryRepository queryRepository;
 
 
     @GetMapping("index")
@@ -32,20 +38,29 @@ public class NumideController  {
         return new ModelAndView("numide/query");
     }
 
+    @GetMapping("/querydata")
+    public Result<List<QueryEntity>> QueryData(){
+        return Result.of(queryRepository.findAll());
+    }
 
 
 //     获取输入信息
     @PostMapping(value = "/getForm")
     public String getForm(@RequestBody String str) throws Exception {
+
         Gson gson = new Gson();
         FormEntity formEntity = gson.fromJson(str, FormEntity.class);
+        System.out.println(formEntity);
+
         InputFeature inputFeature = numideService.getInputFeatureFromForm(formEntity);
         OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
 
+        numideService.saveQueryEntity(formEntity, outputResultVo);
         Result data = Result.of(outputResultVo);
         String dataJson = gson.toJson(data);
         Response response = new Response();
         response.setMessage(dataJson);
+
 
 
 

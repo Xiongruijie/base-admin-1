@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80029
 File Encoding         : 65001
 
-Date: 2022-08-26 18:12:22
+Date: 2022-09-02 10:15:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `biochemical_test_table` (
   `biochemical_shorthand` varchar(255) DEFAULT NULL,
   `biochemical_ch` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`biochemical_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of biochemical_test_table
@@ -83,44 +83,84 @@ INSERT INTO `biochemical_test_table` VALUES ('47', 'D-\r\nXylose', 'Xyl', '木�
 -- ----------------------------
 DROP TABLE IF EXISTS `persistent_logins`;
 CREATE TABLE `persistent_logins` (
-  `series` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'id',
-  `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '登陆账号',
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'cookie令牌',
+  `series` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'id',
+  `username` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '登陆账号',
+  `token` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'cookie令牌',
   `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`series`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT COMMENT='persistent_logins表，用户实现记住我功能';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT COMMENT='persistent_logins表，用户实现记住我功能';
 
 -- ----------------------------
 -- Records of persistent_logins
 -- ----------------------------
 INSERT INTO `persistent_logins` VALUES ('0ja9lGXC4Iy9511a5qLh6g==', 'sa', 'BMOC9IVj+b2sq02cgJ9PeQ==', '2022-08-25 06:19:51');
 INSERT INTO `persistent_logins` VALUES ('0jpeihOWDxrOW/f7eCIttg==', 'sa', 'BxETYdNb8QZnpYaf4hm56A==', '2022-08-25 06:47:32');
-INSERT INTO `persistent_logins` VALUES ('CnG6zWeNbCUsARyU7tqtUQ==', 'sa', 'nYTNPfdFk8VESd1q0nM98g==', '2022-08-25 18:09:21');
+INSERT INTO `persistent_logins` VALUES ('NoU0JmA8NTaSzoaPEAf1Ww==', 'sa', 'SKoqM/3+sznMZKYi6j4URA==', '2022-09-01 19:21:24');
 INSERT INTO `persistent_logins` VALUES ('VL9NMrDbL7wvc6o3dxjrng==', 'sa', 'DRiv6JQCIrJ2ERGBTOlAAA==', '2022-07-28 10:47:50');
 
 -- ----------------------------
--- Table structure for query_table
+-- Table structure for query
 -- ----------------------------
-DROP TABLE IF EXISTS `query_table`;
-CREATE TABLE `query_table` (
-  `user_id_query` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
-  `login_name_query` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
-  `user_name_query` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
-  `query_datetime` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
-  KEY `query_user_id` (`user_id_query`),
-  KEY `query_login_name` (`login_name_query`),
-  KEY `query_user_name` (`user_name_query`),
-  CONSTRAINT `query_login_name` FOREIGN KEY (`login_name_query`) REFERENCES `sys_user` (`login_name`),
-  CONSTRAINT `query_user_id` FOREIGN KEY (`user_id_query`) REFERENCES `sys_user` (`user_id`),
-  CONSTRAINT `query_user_name` FOREIGN KEY (`user_name_query`) REFERENCES `sys_user` (`user_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+DROP TABLE IF EXISTS `query`;
+CREATE TABLE `query` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(50) DEFAULT NULL,
+  `input_date` varchar(50) DEFAULT NULL,
+  `sample_type` varchar(50) DEFAULT NULL,
+  `sample_number` varchar(50) DEFAULT NULL,
+  `sample_source` varchar(50) DEFAULT NULL,
+  `remark` varchar(50) DEFAULT NULL,
+  `Phe` varchar(50) DEFAULT NULL,
+  `Xyl` varchar(50) DEFAULT NULL,
+  `Raf` varchar(50) DEFAULT NULL,
+  `Ind` varchar(50) DEFAULT NULL,
+  `Suc` varchar(50) DEFAULT NULL,
+  `Orn` varchar(50) DEFAULT NULL,
+  `Lac` varchar(50) DEFAULT NULL,
+  `ONPG` varchar(50) DEFAULT NULL,
+  `Ure` varchar(50) DEFAULT NULL,
+  `Cit` varchar(50) DEFAULT NULL,
+  `Malt` varchar(50) DEFAULT NULL,
+  `Lys` varchar(50) DEFAULT NULL,
+  `Malo` varchar(50) DEFAULT NULL,
+  `Sor` varchar(50) DEFAULT NULL,
+  `Dul` varchar(50) DEFAULT NULL,
+  `Ara` varchar(50) DEFAULT NULL,
+  `Mel` varchar(50) DEFAULT NULL,
+  `Rha` varchar(50) DEFAULT NULL,
+  `Esc` varchar(50) DEFAULT NULL,
+  `MR` varchar(50) DEFAULT NULL,
+  `H2S` varchar(50) DEFAULT NULL,
+  `Tre` varchar(50) DEFAULT NULL,
+  `Cel` varchar(50) DEFAULT NULL,
+  `Ox` varchar(50) DEFAULT NULL,
+  `result` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `query_table_id_uindex` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
--- Records of query_table
+-- Records of query
 -- ----------------------------
-INSERT INTO `query_table` VALUES ('1', 'sa', '超级管理员', null);
-
-
+INSERT INTO `query` VALUES ('45', '544065797@qq.com', '2022-08-31 19:08:56', '3', null, '3', '3', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Providencia rustigianii');
+INSERT INTO `query` VALUES ('46', '544065797@qq.com', '2022-08-31 19:08:07', '3', null, '3', '3', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '+', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Enterobacter cloacae');
+INSERT INTO `query` VALUES ('47', '544065797@qq.com', '2022-08-31 20:08:08', '3', null, '3', '3', '+', '+', '-', '+', '+', '-', '+', '+', '-', '+', '+', '-', '+', '+', '-', '+', '+', '-', '+', '+', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Pantoea agglomerans');
+INSERT INTO `query` VALUES ('48', '544065797@qq.com', '2022-09-01 14:09:52', '2', null, '2', '', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('49', '544065797@qq.com', '2022-09-01 14:09:01', '2', null, '2', '', '+', '+', '+', '+', '+', '+', '+', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Morganella morganii biogroup 1');
+INSERT INTO `query` VALUES ('50', '544065797@qq.com', '2022-09-01 14:09:10', '2', null, '2', '', '+', '+', '+', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Pantoea agglomerans');
+INSERT INTO `query` VALUES ('51', '544065797@qq.com', '2022-09-01 14:09:52', '2', null, '2', '', '-', '+', '-', '-', '+', '-', '-', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('52', '544065797@qq.com', '2022-09-01 14:09:04', '2', null, '2', '', '+', '+', '-', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Pantoea agglomerans');
+INSERT INTO `query` VALUES ('53', '544065797@qq.com', '2022-09-01 14:09:10', '2', null, '2', '', '+', '-', '-', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Pantoea agglomerans');
+INSERT INTO `query` VALUES ('54', '544065797@qq.com', '2022-09-01 14:09:27', '3', null, '3', '', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('55', '544065797@qq.com', '2022-09-01 14:09:52', '3', null, '3', '', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('56', '544065797@qq.com', '2022-09-01 14:09:33', '3', null, '3', '', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Providencia rustigianii');
+INSERT INTO `query` VALUES ('57', '544065797@qq.com', '2022-09-01 14:09:12', '3', null, '3', '', '+', '+', '-', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Providencia rustigianii');
+INSERT INTO `query` VALUES ('58', '544065797@qq.com', '2022-09-01 15:09:05', '2', null, '2', '2', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('59', '544065797@qq.com', '2022-09-01 15:09:06', '2', null, '2', '2', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('60', '544065797@qq.com', '2022-09-01 15:09:07', '2', null, '2', '2', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('61', '544065797@qq.com', '2022-09-01 15:09:34', '3', null, '3', '3', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('62', '544065797@qq.com', '2022-09-01 16:09:11', '22', null, '2', '2', '-', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
+INSERT INTO `query` VALUES ('63', '544065797@qq.com', '2022-09-01 16:09:38', '2', null, '2', '23', '+', '+', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '结果评价: 不可接受的鉴定结果: Tatumella ptyseos');
 
 -- ----------------------------
 -- Table structure for strain_table
@@ -132,7 +172,7 @@ CREATE TABLE `strain_table` (
   `strain_ch_name` varchar(255) DEFAULT NULL,
   `strain_class` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`strain_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of strain_table
@@ -321,7 +361,7 @@ CREATE TABLE `strain_test_table` (
   `test_47` int DEFAULT NULL,
   PRIMARY KEY (`strain_id`),
   CONSTRAINT `strain_id` FOREIGN KEY (`strain_id`) REFERENCES `strain_table` (`strain_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of strain_test_table
@@ -594,7 +634,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'sa', '超级管理员', 'E10ADC3949BA59ABBE56E057F20F883E', 'Y', '', null, '2019-09-17 12:00:36', '2022-08-25 18:09:21', 'Y', '2019-07-19 16:36:03', '2022-08-25 06:57:49');
+INSERT INTO `sys_user` VALUES ('1', 'sa', '超级管理员', 'E10ADC3949BA59ABBE56E057F20F883E', 'Y', '', null, '2019-09-17 12:00:36', '2022-09-01 19:21:24', 'Y', '2019-07-19 16:36:03', '2022-08-25 06:57:49');
 INSERT INTO `sys_user` VALUES ('2', 'admin', '用户', 'E10ADC3949BA59ABBE56E057F20F883E', 'Y', '', null, '2019-09-17 12:00:36', '2022-07-25 21:03:43', 'N', '2019-07-19 16:36:03', '2022-07-28 10:36:36');
 INSERT INTO `sys_user` VALUES ('37763ff974984a439b973739db8a71f9', 'user', '111', 'E10ADC3949BA59ABBE56E057F20F883E', 'Y', '', null, '2022-07-25 20:58:07', '2022-07-25 21:02:26', 'N', '2022-07-25 20:58:07', '2022-07-25 21:02:06');
 

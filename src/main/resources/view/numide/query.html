@@ -13,10 +13,11 @@
 </head>
 
 <body>
-<table id="demo" lay-filter="test"></table>
+<div class="layui-col-space12"  th:fragment="table_refresh" >
+    <table id="tableQuery" class="layui-table"></table>
+</div>
 </body>
 <script th:src="@{/numide/js/query.js}" ></script>
-<script src="//unpkg.com/layui@2.7.6/dist/layui.js"/>
 
 </html>
 

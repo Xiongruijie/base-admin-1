@@ -1,12 +1,12 @@
-package cn.huanzi.qch.baseadmin.numide.pojo;
+package cn.huanzi.qch.baseadmin.numide.controller.pojo;
 
 import lombok.Data;
 
 @Data
 public class InputFeature {
-    public Character Phe = '+';
-    public Character Xyl = '+';
-    public Character Raf = '+';
+    public Character Phe = '-';
+    public Character Xyl = '-';
+    public Character Raf = '-';
     public Character Ind = '-';
     public Character Suc = '-';
     public Character Orn = '-';

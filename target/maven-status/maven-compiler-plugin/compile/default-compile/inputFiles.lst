@@ -30,11 +30,9 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusera
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\annotation\In.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\JsonUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\repository\CommonRepository.java
-D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\vo\ResultVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SecurityUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\aspect\OpenApiAspect.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\async\AsyncConfig.java
-D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\BioReverseTest.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysshortcutmenu\repository\SysShortcutMenuRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\controller\SysSettingController.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\annotation\Between.java
@@ -44,6 +42,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\secur
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\exception\StrainIdError.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\pojo\PageInfo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\openapi\controller\OpenApiController.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\QueryRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\SupplementCompute.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\monitor\MonitorWSServer.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\logback\LoggingWSServer.java
@@ -62,6 +61,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusera
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\pojo\HolidayVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\ByteUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysmenu\repository\SysMenuRepository.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\QueryEntity.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\pojo\ParameterRequestWrapper.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusermenu\service\SysUserMenuService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\openapi\service\OpenApiService.java
@@ -74,11 +74,12 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\ErrorUt
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\pojo\SysSetting.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\annotation\Decrypt.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusermenu\controller\SysUserMenuController.java
-D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\BioReverseTest.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\Supplement.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\vo\OutputResultVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SysSettingUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\service\CommonServiceImpl.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysauthority\controller\SysAuthorityController.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\vo\OutputResultElementVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\VerifyCodeImageUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysmenu\pojo\SysMenu.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\NumideResult.java
@@ -120,6 +121,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysuser\
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\RsaUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\autogenerator\AutoGeneratorPlus.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\BaseAdminApplication.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\FormEntity.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusermenu\vo\SysUserMenuVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\annotation\Encrypt.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\PasswordConfig.java
@@ -127,6 +129,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysmenu\
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\user\service\UserService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\HolidayUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\MD5Util.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\pojo\ComputeStrainTest.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\MenuUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SystemMonitorUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SpringUtils.java

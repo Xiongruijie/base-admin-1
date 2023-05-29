@@ -1,13 +1,13 @@
 package cn.huanzi.qch.baseadmin.numide.service;
 
 
-import cn.huanzi.qch.baseadmin.numide.pojo.*;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.*;
 import cn.huanzi.qch.baseadmin.numide.repository.BiochemicalTestRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.QueryRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainTestRepository;
-import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
 import cn.huanzi.qch.baseadmin.numide.vo.OutputResultElementVo;
+import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -253,6 +254,8 @@ public class NumideServiceImpl implements NumideService {
                     methodSet.invoke(computePrepare, 100 - (Integer) methodGet.invoke(computePrepare, null));
                 } else if (feature == '?') {
                     //methodSet.invoke(computePrepare,null);
+                    methodSet.invoke(computePrepare, (Integer)1);
+
 
                 } else {
                     throw new Exception("输入错误，非？-+三个字符中任意一个");
@@ -307,6 +310,7 @@ public class NumideServiceImpl implements NumideService {
             for (Field inputFeatureClassDeclaredField : inputFeatureClassDeclaredFields) {
                 inputFeatureClassDeclaredField.setAccessible(true);
             }
+
             for (Field computePrepareClassDeclaredField : computePrepareClassDeclaredFields) {
                 computePrepareClassDeclaredField.setAccessible(true);
                 if (computePrepareClassDeclaredField.getName().equals("strain_id") || computePrepareClassDeclaredField.getName().equals("TSum")) {
@@ -1055,9 +1059,11 @@ public class NumideServiceImpl implements NumideService {
         return numideResult;
     }
 
+
     public OutputResultVo getOutputResult(InputFeature inputFeature) throws Exception {
         OutputResultVo outputResultVo = new OutputResultVo();
         NumideResult numideResult = this.getNumideResult(inputFeature);
+        System.out.println(numideResult);
 
         List<OutputResultElementVo> outputResultElementList = new ArrayList<>();
         OutputResultElementVo StrainName = new OutputResultElementVo();
@@ -1170,12 +1176,25 @@ public class NumideServiceImpl implements NumideService {
         inputFeature.setCel(formEntity.getCel().toCharArray()[0]);
         inputFeature.setOx(formEntity.getOx().toCharArray()[0]);
 
+        return inputFeature;
+    }
+
+    public void saveQueryEntity(FormEntity formEntity, OutputResultVo outputResultVo){
+        Date d = new Date();
+        SimpleDateFormat s1 = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss");
+        System.out.println(s1.format(d));
+        //简写格式
+        String s = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss").format(new Date());
+
         QueryEntity queryEntity = new QueryEntity();
         queryEntity.setUserName(formEntity.getUserName());
-        queryEntity.setInputDate(formEntity.getInputDate());
+        queryEntity.setInputDate(s);
         queryEntity.setSampleType(formEntity.getSampleType());
         queryEntity.setSampleSource(formEntity.getSampleSource());
         queryEntity.setRemark(formEntity.getRemark());
+        queryEntity.setPhe(formEntity.getPhe());
+        queryEntity.setXyl(formEntity.getXyl());
+        queryEntity.setRaf(formEntity.getRaf());
         queryEntity.setInd(formEntity.getInd());
         queryEntity.setSuc(formEntity.getSuc());
         queryEntity.setOrn(formEntity.getOrn());
@@ -1197,12 +1216,9 @@ public class NumideServiceImpl implements NumideService {
         queryEntity.setTre(formEntity.getTre());
         queryEntity.setCel(formEntity.getCel());
         queryEntity.setOx(formEntity.getOx());
-
+        queryEntity.setResult(outputResultVo.getResultEvaluation());
 
         queryRepository.save(queryEntity);
-
-
-        return inputFeature;
     }
 
 

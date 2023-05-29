@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.pojo;
+package cn.huanzi.qch.baseadmin.numide.controller.pojo;
 
 import cn.huanzi.qch.baseadmin.numide.exception.StrainIdError;
 import lombok.Data;

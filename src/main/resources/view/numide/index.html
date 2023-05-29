@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="layui-row layui-col-space15">
-    <form class="layui-form" id="inputForm" name="form" target="hidden" method="post">
+    <form class="layui-form noPrint" id="inputForm" name="form" target="hidden" method="post">
         <!--    输入信息    -->
         <fieldset class="layui-elem-field">
             <legend>信息</legend>
@@ -25,7 +25,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-block">
-                            <input type="text" name="UserName" id="UserName" autocomplete="on" th:value="@{}"
+                            <input type="text" name="UserName" id="UserName" autocomplete="on"
                                    class="layui-input" >
                         </div>
                     </div>
@@ -445,7 +445,7 @@
                     <button type="button" class="layui-btn layui-btn-primary layui-btn-disabled" id="outputFile" onclick="saveForm()">输出</button>
                 </div>
                 <div class="layui-col-md2">
-                    <button type="button" class="layui-btn layui-btn-primary layui-btn-disabled" id="printResult" onclick="printDiv('table_refresh')">打印</button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-disabled" id="printResult" onclick="window.print()">打印</button>
                 </div>
                 <div class="layui-col-md2">
                     <button type="button" class="layui-btn layui-btn-primary">退出</button>

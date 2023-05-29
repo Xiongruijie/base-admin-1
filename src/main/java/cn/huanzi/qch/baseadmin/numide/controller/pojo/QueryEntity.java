@@ -1,4 +1,4 @@
-package cn.huanzi.qch.baseadmin.numide.pojo;
+package cn.huanzi.qch.baseadmin.numide.controller.pojo;
 
 import lombok.Data;
 
@@ -27,6 +27,9 @@ public class QueryEntity {
     @Column(name = "sample_source")
     String sampleSource;
     String remark;
+    String Phe;
+    String Xyl;
+    String Raf;
     String Ind;
     String Suc;
     String Orn;
@@ -48,4 +51,5 @@ public class QueryEntity {
     String Tre;
     String Cel;
     String Ox;
+    String Result;
 }

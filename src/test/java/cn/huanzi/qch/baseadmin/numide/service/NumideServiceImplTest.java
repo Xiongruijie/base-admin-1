@@ -1,6 +1,6 @@
 package cn.huanzi.qch.baseadmin.numide.service;
 
-import cn.huanzi.qch.baseadmin.numide.pojo.InputFeature;
+import cn.huanzi.qch.baseadmin.numide.controller.pojo.InputFeature;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -30,5 +30,13 @@ public class NumideServiceImplTest extends TestCase {
         System.out.println(numideService.getOutputResult(inputFeature));
         System.out.println("===========================getNumideResult================================================");
         System.out.println(numideService.getNumideResult(inputFeature));
+    }
+
+    @Test
+    public void testPrint() {
+        System.out.println("hello");
+    }
+
+    public void testTestGetNumideResult() {
     }
 }
