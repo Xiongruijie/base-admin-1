@@ -32,6 +32,7 @@ function button_click(opt_symbol,symbol_id_1,symbol_id_2,symbol_id_3,input_id) {
     }
     document.getElementById(input_id).value = sum;
 }
+
 // 输入框输入结束按钮变化
 function after_input(symbol_id_1,symbol_id_2,symbol_id_3,input_id){
 
