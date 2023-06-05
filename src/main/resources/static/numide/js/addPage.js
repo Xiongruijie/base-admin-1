@@ -30,7 +30,7 @@ function uploadFile(){
     var file = $("#file")[0].files[0];
     var formData = new FormData();
     formData.append("file",file);
-    // formData.append("name","dong");
+    formData.append("name","dong");
     $.ajax({
         type:'post',
         url:'/numide/upload',

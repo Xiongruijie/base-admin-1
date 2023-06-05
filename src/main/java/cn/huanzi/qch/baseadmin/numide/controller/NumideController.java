@@ -105,7 +105,7 @@ public class NumideController {
 
     @PostMapping("/addSystem")
     public void AddSystemInforamtion(@RequestBody String str){
-
+        System.out.println(str);
     }
 
 
