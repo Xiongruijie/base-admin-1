@@ -12,13 +12,16 @@ import com.google.gson.Gson;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/numide/")
-public class NumideController  {
+public class NumideController {
 
     @Autowired
     public NumideService numideService;
@@ -29,22 +32,22 @@ public class NumideController  {
 
 
     @GetMapping("index")
-    public ModelAndView Numide(){
+    public ModelAndView Numide() {
         return new ModelAndView("numide/index");
     }
 
     @GetMapping("query")
-    public ModelAndView NumideQuery(){
+    public ModelAndView NumideQuery() {
         return new ModelAndView("numide/query");
     }
 
     @GetMapping("/querydata")
-    public Result<List<QueryEntity>> QueryData(){
+    public Result<List<QueryEntity>> QueryData() {
         return Result.of(queryRepository.findAll());
     }
 
 
-//     获取输入信息
+    //     获取输入信息
     @PostMapping(value = "/getForm")
     public String getForm(@RequestBody String str) throws Exception {
 
@@ -53,15 +56,15 @@ public class NumideController  {
         System.out.println(formEntity);
 
         InputFeature inputFeature = numideService.getInputFeatureFromForm(formEntity);
+        // 计算结果
         OutputResultVo outputResultVo = numideService.getOutputResult(inputFeature);
-
+        // 存储查询
         numideService.saveQueryEntity(formEntity, outputResultVo);
         Result data = Result.of(outputResultVo);
         String dataJson = gson.toJson(data);
         Response response = new Response();
         response.setMessage(dataJson);
-
-
+        //回传数据
 
 
         return dataJson;
@@ -79,4 +82,35 @@ public class NumideController  {
         return Result.of(outputResultVo);
     }
 
+    @PostMapping("/upload")
+    String Upload(MultipartFile file) throws IOException {
+//         获取项目根路径
+        String currentPath = System.getProperty("user.dir");
+        File upload = new File(currentPath, "static/images/upload/");
+        if (!upload.exists()) upload.mkdirs();
+        System.out.println("upload url:" + upload.getAbsolutePath());
+        //获得路径
+        String path = upload.getPath();
+        //创建文件夹
+        File fold = new File(path);
+        while (!fold.exists()) {
+            fold.mkdirs();
+        }
+        String oldname1 = file.getOriginalFilename();
+        // 新文件名
+        file.transferTo(new File(fold, oldname1));
+
+        return oldname1;
+    }
+
+    @PostMapping("/addSystem")
+    public void AddSystemInforamtion(@RequestBody String str){
+
+    }
+
+
+    @GetMapping("/addPage")
+    public ModelAndView AddSystem() {
+        return new ModelAndView("numide/addPage");
+    }
 }

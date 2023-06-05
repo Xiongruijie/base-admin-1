@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/numide.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="layui-row layui-col-space15">
+    <form class="layui-form noPrint" id="AddSystemForm" name="form" target="hidden" method="post"
+          enctype="multipart/form-data">
+        <!--        输入信息-->
+        <fieldset class="layui-elem-field">
+            <legend>上传数据库</legend>
+            <div class="layui-row layui-col-space15">
+                <!--    时间选择-->
+                <!--    表单不刷新    -->
+                <iframe name="hidden" style="display:none;"></iframe>
+                <!-------------------------------------------->
+                <div class="layui-col-md3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">系统名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="SystemName" id="SystemName" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="inputDate" id="inputDateTime" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!--            控制按钮-->
+        <fieldset class="layui-elem-field ">
+            <legend>上传文件</legend>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md2">
+                </div>
+                <input type="file" name="file">
+                <input type="button" value="上传" onclick="uploadFile()">
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md2">
+                    <button  class="layui-btn layui-btn-primary" onclick="SubmitSystem()" id="checked">确认</button>
+                </div>
+            </div>
+        </fieldset>
+
+    </form>
+    <!--    输出-->
+
+
+    </fieldset>
+</div>
+</body>
+
+
+<!-- js -->
+<!--<script th:src="@{/sys/user/js/user.js}"></script>-->
+<!--<script th:src="@{/sys/menu/js/menu.js}"></script>-->
+<script th:src="@{/numide/js/addPage.js}"></script>
+
+<script th:src="@{/common/jquery/jquery.table2excel.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</html>
+

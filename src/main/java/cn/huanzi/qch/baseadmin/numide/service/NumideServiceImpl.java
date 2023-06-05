@@ -1150,10 +1150,14 @@ public class NumideServiceImpl implements NumideService {
 
 
         return outputResultVo;
+
     }
 
     public InputFeature getInputFeatureFromForm(FormEntity formEntity){
         InputFeature inputFeature = new InputFeature();
+        inputFeature.setPhe(formEntity.getPhe().toCharArray()[0]);
+        inputFeature.setXyl(formEntity.getXyl().toCharArray()[0]);
+        inputFeature.setRaf(formEntity.getRaf().toCharArray()[0]);
         inputFeature.setInd(formEntity.getInd().toCharArray()[0]);
         inputFeature.setSuc(formEntity.getSuc().toCharArray()[0]);
         inputFeature.setOrn(formEntity.getOrn().toCharArray()[0]);
