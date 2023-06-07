@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/numide.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="layui-col-md1 numide-input-element-div">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <input type="text" id="" class="layui-input" >
+        </div>
+        <div class="layui-card-body">
+            <div class="layui-card">
+                <div class="layui-row grid-demo grid-demo-bg1">
+                    <div class="layui-col-md12">
+                        <div class="layui-col-md4">
+                            <input type="text" id="Experiment" class="layui-input" >
+                            <br>
+                        </div>
+                    </div>
+                    <div class="layui-col-md12">
+                        <div class="layui-col-md4 ">
+                            Cit
+                        </div>
+                        <div class="layui-col-md4 ">
+                            Malt
+                        </div>
+                        <div class="layui-col-md4 button-margin">
+                            Lys
+                        </div>
+
+                    </div>
+                    <br>
+                    <div><button  class="layui-btn layui-btn-primary" onclick="SubmitExperiment()" id="checked">确认</button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<!-- js -->
+<!--<script th:src="@{/sys/user/js/user.js}"></script>-->
+<!--<script th:src="@{/sys/menu/js/menu.js}"></script>-->
+<script th:src="@{/numide/js/addPage.js}"></script>
+<script th:src="@{/common/jquery/jquery.table2excel.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</html>
+
+
+
+

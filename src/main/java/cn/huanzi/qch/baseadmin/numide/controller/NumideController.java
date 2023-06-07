@@ -104,7 +104,9 @@ public class NumideController {
     }
 
     @PostMapping("/addSystem")
-    public void AddSystemInforamtion(@RequestBody String str){
+    public void AddSystemInformation(@RequestBody String str){
+//        Gson gson = new Gson();
+//        FormEntity formEntity = gson.fromJson(str, FormEntity.class);
         System.out.println(str);
     }
 
