@@ -1,0 +1,14 @@
+.hiddendiv {
+    display: none;
+}
+.TextExperient{
+    width: 40px;
+}
+
+.input-element-box{
+    width: 160px;
+    margin: 3px;
+}
+.left_align{
+    margin-left: 5px;
+}

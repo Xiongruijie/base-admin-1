@@ -29,7 +29,9 @@
             <version>5.3.22</version>
         </dependency>
 
-<!--        &lt;!&ndash; json       &ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash; json       &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba</groupId>-->
 <!--            <artifactId>fastjson</artifactId>-->
@@ -143,12 +145,23 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+
+
         <!--https://github.com/oshi/oshi。-->
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-json</artifactId>
             <version>3.6.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <scope>system</scope>
+            <version>5.7.1</version>
+            <systemPath>${pom.basedir}/src/lib/opencsv-5.7.1.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <!--构建工具-->
@@ -179,7 +192,15 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+            <!--            <plugin>-->
 <!--                <groupId>org.springframework.boot</groupId>-->
 <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
 <!--                <executions>-->

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!--解决idea thymeleaf 表达式模板报红波浪线-->
+<!--suppress ALL -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+    <!-- 样式 -->
+    <link th:href="@{/sys/menu/css/menu.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/numide/css/numide.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+
+<div class="layui-row layui-col-space15">
+    <form class="layui-form noPrint" id="inputForm" name="form" target="hidden" method="post">
+        <!--    输入信息    -->
+        <fieldset class="layui-elem-field">
+            <legend>信息</legend>
+            <div class="layui-row layui-col-space15">
+                <!--    时间选择-->
+                <!--    表单不刷新    -->
+                <iframe name="hidden" style="display:none;"></iframe>
+                <!-------------------------------------------->
+                <div class="layui-col-md3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="UserName" id="UserName" autocomplete="on"
+                                   class="layui-input" >
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="inputDate" id="inputDateTime" autocomplete="off"
+                                   class="layui-input" >
+                        </div>
+                    </div>
+                </div>
+
+                <!--    样本类型-->
+                <div class="layui-col-md3">
+                    <label class="layui-form-label">样本类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sampleType" required lay-verify="required" placeholder="请输入样本类型"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--    样本编号-->
+                <div class="layui-col-md3">
+                    <label class="layui-form-label">样本编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sampleNumber" required lay-verify="required" placeholder="请输入样本编号"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md15">
+                <label class="layui-form-label">来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sampleSource" placeholder="" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md15">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="remark"    placeholder="" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+        </fieldset>
+        <!--        输入按钮-->
+        <fieldset class="layui-elem-field">
+            <!-- 菌种阴性阳性输入表 -->
+            <!--    ip 命名规则   -->
+            <!--    第一个数字表示第几个输入框-->
+            <!--    第二个数字表示输入框中第几个元素，“124”分别是第一第二第三个元素-->
+            <!--    第三个数字表示ip代表数字符号还是数字-->
+            <legend>输入</legend>
+            <div class="layui-field-box numide-input-div">
+                <div class="layui-col-space10">
+                    <!-- 插入位置-->
+                    <div class="layui-col-md1 numide-input-element-div">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <input type="text" id="{3}" th:value="0" name="one" maxlength="1" autocomplete="off" class="layui-input"
+                                       onkeyup="after_input()">
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="layui-card">
+                                    <div class="layui-row grid-demo grid-demo-bg1">
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4">
+                                                <input type="text button" name="{0}" class="layui-btn layui-btn-xs button-width" id="{0}" value="-" onclick="button_click()" tabindex="-1">
+                                                <br>
+                                                1
+                                            </div>
+
+                                            <div class="layui-col-md4">
+                                                <input type="text button" name="{1}" class="layui-btn layui-btn-xs button-width" id="{1}" value="-" onclick="button_click(121,111,121,131,10)" tabindex="-1">
+                                                <br>
+                                                2
+                                            </div>
+                                            <div class="layui-col-md4">
+                                                <input type="text button" name="{2}" class="layui-btn layui-btn-xs button-width" id="{2}" value="-" onclick="button_click(131,111,121,131,10)" tabindex="-1">
+                                                <br>
+                                                4
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12">
+                                            <div class="layui-col-md4 ">
+                                                {0}
+                                            </div>
+                                            <div class="layui-col-md4 ">
+                                                {1}
+                                            </div>
+                                            <div class="layui-col-md4 button-margin">
+                                                {2}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1 numide-input-element-div">
+<!--                    <div class="layui-card">-->
+<!--                        <div class="layui-card-header">-->
+<!--                            <input type="text" id="{2}" th:value="0" name="one" maxlength="1" autocomplete="off" class="layui-input"-->
+<!--                                   onkeyup="after_input({0},{1},null,{2})" onpaste="after_input({0},{1},null,{2})">-->
+<!--                        </div>-->
+<!--                        <div class="layui-card-body">-->
+<!--                            <div class="layui-card">-->
+<!--                                <div class="layui-row grid-demo grid-demo-bg1">-->
+<!--                                    <div class="layui-col-md12">-->
+<!--                                        <div class="layui-col-md4">-->
+<!--                                            <input type="text button" name="{0}" class="layui-btn layui-btn-xs button-width" id="{0}" value="-" onclick="button_click({0},{0},{1},null,{2})" tabindex="-1">-->
+<!--                                            <br>-->
+<!--                                            1-->
+<!--                                        </div>-->
+
+<!--                                        <div class="layui-col-md4">-->
+<!--                                            <input type="text button" name="{1}" class="layui-btn layui-btn-xs button-width" id="{1}" value="-" onclick="button_click({1},{0},{1},null,{2})" tabindex="-1">-->
+<!--                                            <br>-->
+<!--                                            2-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="layui-col-md12">-->
+<!--                                        <div class="layui-col-md4 ">-->
+<!--                                            {0}-->
+<!--                                        </div>-->
+<!--                                        <div class="layui-col-md4 ">-->
+<!--                                            {1}-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!--                        在这插入-->
+                </div>
+<!--                    <div class="layui-col-md1 numide-input-element-div">-->
+<!--                        <div class="layui-card">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <input type="text" id="{1}" th:value="0" name="one" maxlength="1" autocomplete="off" class="layui-input"-->
+<!--                                       onkeyup="after_input({0},null,null,{1})" onpaste="after_input({0},null,null,{1})">-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                <div class="layui-card">-->
+<!--                                    <div class="layui-row grid-demo grid-demo-bg1">-->
+<!--                                        <div class="layui-col-md12">-->
+<!--                                            <div class="layui-col-md4">-->
+<!--                                                <input type="text button" name="{0}" class="layui-btn layui-btn-xs button-width" id="{0}" value="-" onclick="button_click({0},{0},null,null,{1})" tabindex="-1">-->
+<!--                                                <br>-->
+<!--                                                1-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="layui-col-md12">-->
+<!--                                            <div class="layui-col-md4 ">-->
+<!--                                                {0}-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;                        在这插入&ndash;&gt;-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </fieldset>
+        <!--        控制按钮-->
+        <fieldset class="layui-elem-field ">
+            <legend>控制按钮</legend>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md2">
+
+                </div>
+                <div class="layui-col-md2">
+                    <button  class="layui-btn layui-btn-primary" onclick="SubmitForm()" id="checked">确认</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="reset" class="layui-btn layui-btn-primary">新实验</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-disabled" id="outputFile" onclick="saveForm()">输出</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-disabled" id="printResult" onclick="window.print()">打印</button>
+                </div>
+                <div class="layui-col-md2">
+                    <button type="button" class="layui-btn layui-btn-primary">退出</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <!--输出-->
+    <fieldset class="layui-elem-field ">
+        <legend>结果</legend>
+        <div class="layui-col-space12"  th:fragment="table_refresh" id="table_refresh">
+            <table id="strainTable" class="layui-table">
+            </table>
+        </div>
+
+    </fieldset>
+</div>
+</body>
+
+<!-- js -->
+<!--<script th:src="@{/sys/user/js/user.js}"></script>-->
+<!--<script th:src="@{/sys/menu/js/menu.js}"></script>-->
+<script th:src="@{/numide/js/numide.js}" ></script>
+
+<script th:src="@{/common/jquery/jquery.table2excel.min.js}"></script>
+
+</html>
+

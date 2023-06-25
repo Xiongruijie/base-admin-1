@@ -13,9 +13,8 @@
 </head>
 <body>
 <div class="layui-row layui-col-space15">
-    <form class="layui-form noPrint" id="AddSystemForm" name="form" target="hidden" method="post"
-          enctype="multipart/form-data">
-        <!--        输入信息-->
+    <!--        输入信息-->
+    <form id="uploadForm">
         <fieldset class="layui-elem-field">
             <legend>上传数据库</legend>
             <div class="layui-row layui-col-space15">
@@ -27,61 +26,29 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">系统名</label>
                         <div class="layui-input-block">
-                            <input type="text" name="SystemName" id="SystemName" autocomplete="off" class="layui-input">
+                            <input type="text" name="systemName" id="systemName" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">日期</label>
+                    <div class="layui-col-md3 ">
                         <div class="layui-input-block">
-                            <input type="text" name="inputDate" id="inputDateTime" autocomplete="off"
-                                   class="layui-input">
+                            <input class="layui-btn layui-btn-radius layui-btn-primary" type="file" id="file"
+                                   value="">
                         </div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">生化实验数</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="inputExperimentNumber" id="inputExperimentNumber"
-                                   autocomplete="off"
-                                   class="layui-input">
-                        </div>
+                    <div class="layui-input-block">
+                        <input class="layui-btn layui-btn-primary" type="button" value="上传" onclick="uploadFile()">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <button class="layui-btn layui-btn-primary" onclick="GenerateInput()" id="checked">确认</button>
+                <div class="layui-col-md3 ">
+                    <div id="result"></div>
                 </div>
             </div>
         </fieldset>
     </form>
-    <legend>界面设计</legend>
-    <div class="layui-row layui-col-space15" id="InterfaceDesign">
-    </div>
-    <!--    TODO 通过onclick和append改变当前表单，生化实验的名称、数据库名称、日期通过ajax的json传给后端进行解析-->
-    <fieldset class="layui-elem-field ">
-        <legend>上传数据库文件</legend>
-        <div class="layui-col-md3">
-            <div class="layui-inline">
-                <div class="layui-input-block">
-                    <input class="layui-btn layui-btn-radius layui-btn-primary" type="file" id="file" value="点击上传">
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md3">
-            <div class="layui-inline">
-                <div class="layui-input-block">
-                    <input class="layui-btn layui-btn-primary" type="button" value="上传" onclick="uploadFile()">
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md3">
-            <div class="layui-inline">
-                <div id="result"></div>
-            </div>
-        </div>
-    </fieldset>
 </div>
 
 </body>
