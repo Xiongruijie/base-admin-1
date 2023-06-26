@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetInput {
+    Integer num;
     String date;
     String sampleNumber;
     String inputStr;

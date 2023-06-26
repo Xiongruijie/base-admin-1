@@ -2,6 +2,7 @@
 import sys
 import os
 import importlib
+import uuid
 
 interactive_mode = 1
 output_option = 0
@@ -15,8 +16,10 @@ if len(sys.argv) < 2:
     exit()
 
 db_file = sys.argv[1]
-if os.path.exists(db_file+'.py') is False:
+
+if os.path.exists(os.getcwd()+'\\src\\main\\java\\cn\\huanzi\\qch\\baseadmin\\numide\\controller\\'+db_file+'.py') is False:
     print("Can't find %s.py"%db_file)
+    print(os.getcwd()+'\\'+db_file+'.py')
     exit()
 
 params = importlib.import_module(db_file)
@@ -28,7 +31,9 @@ dict_spp_name  = params.dict_spp_name
 list_usel_seqn = params.list_usel_seqn
 list_data_tval = params.list_data_tval
 
-out_file = db_file+".res.md"
+# 生成随机文件名
+random_filename = str(uuid.uuid4())
+out_file = db_file+"."+random_filename+"res.md"
 
 if len(sys.argv) == 3:
     interactive_mode = 0
@@ -621,7 +626,8 @@ def main():
             remk = tune_tops_list(sumv)
             comp_inco_expr()
             comp_comp_expr()
-            print_result(remk,fp)
+#             print_result(remk,fp)
+            print(out_file)
         if interactive_mode == 0:
             break
 

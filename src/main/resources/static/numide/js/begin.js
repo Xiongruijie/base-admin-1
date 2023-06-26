@@ -114,6 +114,7 @@ function submitExp() {
             inputStr += document.getElementById(data[i]).value;
         }
         let requestData = {
+            num:window.num,
             date: date,
             sampleNumber: sampleNumber,
             inputStr: inputStr
@@ -155,22 +156,22 @@ function submitExp() {
     // $.ajax(opt);
 }
 
-function getData() {
-    let num = window.num;
-    fetch('/numide/getSelect', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({num: num})
-    }).then(function (response) {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Failed to fetch string list');
-        }
-    }).then(function (data) {
-        console.log("data已接收");
-        return data;
-    })
-}
+// function getData() {
+//     let num = window.num;
+//     fetch('/numide/getSelect', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({num: num})
+//     }).then(function (response) {
+//         if (response.ok) {
+//             return response.json();
+//         } else {
+//             throw new Error('Failed to fetch string list');
+//         }
+//     }).then(function (data) {
+//         console.log("data已接收");
+//         return data;
+//     })
+// }
