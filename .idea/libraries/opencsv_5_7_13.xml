@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="opencsv-5.7.13">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/lib/opencsv-5.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

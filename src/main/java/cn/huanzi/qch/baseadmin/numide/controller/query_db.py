@@ -628,7 +628,7 @@ def main():
             comp_comp_expr()
             print_result(remk,fp)
             print(out_file)
-            print(user_input, result[0])
+            print("result:",user_input, result[1],list_tops_perc[0],list_tops_tval[0],result[0])
         if interactive_mode == 0:
             break
 
