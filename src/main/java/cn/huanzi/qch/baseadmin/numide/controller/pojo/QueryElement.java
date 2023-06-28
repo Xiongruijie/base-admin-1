@@ -15,12 +15,27 @@ import javax.persistence.*;
 @Data
 @Lazy(value = false)
 @Proxy(lazy = false)
-@Table(name = "system_info")
+@Table(name = "query_element")
 public class QueryElement {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Integer query_id;
 
-    @Column
+    @Column(name = "input_number")
     String input_number;
+
+    @Column(name = "file_name")
+    String file_name;
+
+    @Column(name = "system_name")
+    String system_name;
+
+    public QueryElement(Integer query_id, String input_number, String file_name, String system_name) {
+        this.query_id = query_id;
+        this.input_number = input_number;
+        this.file_name = file_name;
+        this.system_name = system_name;
+    }
+
+    public QueryElement() {
+    }
 }

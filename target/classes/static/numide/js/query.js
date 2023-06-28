@@ -24,27 +24,6 @@ layui.use('table',function () {
                     ,{field: 'xyl', title: 'Xyl', width:100}
                     ,{field: 'raf', title: 'Raf', width:100}
                     ,{field: 'ind', title: 'Ind', width:100}
-                    ,{field: 'suc', title: 'Suc', width:100}
-                    ,{field: 'orn', title: 'Orn', width:100}
-                    ,{field: 'lac', title: 'Lac', width:100}
-                    ,{field: 'onpg', title: 'ONPG', width:100}
-                    ,{field: 'ure', title: 'Ure', width:100}
-                    ,{field: 'cit', title: 'Cit', width:100}
-                    ,{field: 'malt', title: 'Malt', width:100}
-                    ,{field: 'lys', title: 'Lys', width:100}
-                    ,{field: 'malo', title: 'Malo', width:100}
-                    ,{field: 'sor', title: 'Sor', width:100}
-                    ,{field: 'dul', title: 'Dul', width:100}
-                    ,{field: 'ara', title: 'Ara', width:100}
-                    ,{field: 'mel', title: 'Mel', width:100}
-                    ,{field: 'rha', title: 'Rha', width:100}
-                    ,{field: 'esc', title: 'Esc', width:100}
-                    ,{field: 'mr', title: 'MR', width:100}
-                    ,{field: 'h2s', title: 'H2S', width:100}
-                    ,{field: 'tre', title: 'Tre', width:100}
-                    ,{field: 'cel', title: 'Cel', width:100}
-                    ,{field: 'ox', title: 'Ox', width:100}
-
                 ]]
                 , data: data.data
             });

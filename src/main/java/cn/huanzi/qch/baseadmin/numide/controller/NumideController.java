@@ -2,6 +2,7 @@ package cn.huanzi.qch.baseadmin.numide.controller;
 
 import cn.huanzi.qch.baseadmin.common.pojo.Result;
 import cn.huanzi.qch.baseadmin.numide.controller.pojo.*;
+import cn.huanzi.qch.baseadmin.numide.repository.QueryElementRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.QueryRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
 import cn.huanzi.qch.baseadmin.numide.repository.SystemInfoRepository;
@@ -15,9 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/numide/")
@@ -31,6 +36,8 @@ public class NumideController {
     public QueryRepository queryRepository;
     @Autowired
     public SystemInfoRepository systemInfoRepository;
+    @Autowired
+    public QueryElementRepository queryElementRepository;
 
 
     @GetMapping("index")
@@ -53,6 +60,7 @@ public class NumideController {
         }
         return (beginEntities);
     }
+
     @GetMapping("query")
     public ModelAndView NumideQuery() {
         return new ModelAndView("numide/query");
@@ -65,7 +73,7 @@ public class NumideController {
 
     //     获取输入信息
     @PostMapping(value = "/getForm")
-    public String getForm(@RequestBody String str) throws Exception {
+    public String getForm(@RequestBody String str) throws Exception, AccessDeniedException {
         String currentPath = System.getProperty("user.dir");
         String localPath = currentPath + "\\src\\main\\java\\cn\\huanzi\\qch\\baseadmin\\numide\\controller\\";
         Gson gson = new Gson();
@@ -115,7 +123,10 @@ public class NumideController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String lines;
             while ((lines = reader.readLine()) != null) {
-                pythonOutputFile = lines;
+                if (lines.endsWith("res.md")) {
+                    pythonOutputFile = lines;
+                    break;
+                }
             }
             // 读取错误输出
             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -132,10 +143,24 @@ public class NumideController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        // TODO: 2023/6/26 将pythonOutputFile的内容读出输入到table中
+        try {
+            // 使程序睡眠 1 秒
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // 读取文件内容为字节数组
+        byte[] fileBytes = Files.readAllBytes(Paths.get(pythonOutputFile));
 
+        // 将字节数组转换为字符串
+        String fileContent = new String(fileBytes);
+        // 记录查询条件到数据库中
+        Random random = new Random();
+        QueryElement queryElement = new QueryElement(random.nextInt(1000000), numberStr, currentPath + pythonOutputFile, fileName);
 
-        return str;
+        queryElementRepository.save(queryElement);
+
+        return fileContent;
     }
 
 

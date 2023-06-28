@@ -54,6 +54,65 @@ function after_input(symbol_id_1, symbol_id_2, symbol_id_3, input_id) {
         symbol_id_1.value = "-";
     }
 }
+function after_input_1(symbol_id_1, input_id) {
+    input_id.value = input_id.value.replace(/[^0-7]/g, '');
+    let sum = parseInt(input_id.value);
+    if (sum >= 1) {
+        symbol_id_1.value = "+";
+        sum -= 1;
+    } else {
+        symbol_id_1.value = "-";
+    }
+}
+function button_click_1(opt_symbol, symbol_id_1, input_id) {
+    let opt_status =opt_symbol.value;
+    if (opt_status == '+') {
+        opt_symbol.value = '-';
+    } else if (opt_status == '-') {
+        opt_symbol.value = '?';
+    } else if (opt_status == '?') {
+        opt_symbol.value = '+';
+    }
+    let sum = 0;
+    if (symbol_id_1.value == "+") {
+        sum += 1;
+    }
+    input_id.value = sum;
+}
+function after_input_2(symbol_id_1, symbol_id_2, input_id) {
+    input_id.value = input_id.value.replace(/[^0-7]/g, '');
+    let sum = parseInt(input_id.value);
+    if (sum >= 2) {
+        symbol_id_2.value = "+";
+        sum -= 2;
+    } else {
+        symbol_id_2.value = "-";
+    }
+    if (sum >= 1) {
+        symbol_id_1.value = "+";
+        sum -= 1;
+    } else {
+        symbol_id_1.value = "-";
+    }
+}
+function button_click_2(opt_symbol, symbol_id_1, symbol_id_2, input_id) {
+    let opt_status =opt_symbol.value;
+    if (opt_status == '+') {
+        opt_symbol.value = '-';
+    } else if (opt_status == '-') {
+        opt_symbol.value = '?';
+    } else if (opt_status == '?') {
+        opt_symbol.value = '+';
+    }
+    let sum = 0;
+    if (symbol_id_1.value == "+") {
+        sum += 1;
+    }
+    if (symbol_id_2.value == "+") {
+        sum += 2;
+    }
+    input_id.value = sum;
+}
 function SubmitForm() {
     $("#strainTable").load(location.href + " #strainTable");
     $("#outputFile").removeClass("layui-btn-disabled");

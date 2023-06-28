@@ -1,4 +1,5 @@
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\MyFilterInvocationSecurityMetadataSource.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\BeginEntity.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\websocket\MyEndpointConfigure.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\NumideResultElement.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\SupplementCompute.java
@@ -15,6 +16,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\secur
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\DynamicallyUrlInterceptor.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\vo\SysSettingVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusermenu\service\SysUserMenuServiceImpl.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\QueryElementRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\eventlistener\eventsource\SecurityMetadataSourceEventSource.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysuserauthority\vo\SysUserAuthorityVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\openapi\service\OpenApiServiceImpl.java
@@ -41,6 +43,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\ApiSecu
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\ErrorPageConfig.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\exception\StrainIdError.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\pojo\PageInfo.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\SystemInfoRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\openapi\controller\OpenApiController.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\QueryRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\InconsistentRecord.java
@@ -48,6 +51,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\contr
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\NumideResult.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\monitor\MonitorWSServer.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\logback\LoggingWSServer.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\GetInput.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\LoginFailureHandlerConfig.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\CopyUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\StrainTestRepository.java
@@ -88,7 +92,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\servi
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysuserauthority\service\SysUserAuthorityService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\service\NumideService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\IpUtil.java
-D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\InputPad.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\SystemInfo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\annotation\Like.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\LoginSuccessHandlerConfig.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysauthority\vo\SysAuthorityVo.java
@@ -116,6 +120,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysautho
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\StrainRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\HttpServletResponseUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysshortcutmenu\vo\SysShortcutMenuVo.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\QueryElement.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\DateUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\eventlistener\SysSettingEventListener.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\NumideController.java
@@ -131,6 +136,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysmenu\
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\user\service\UserService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\HolidayUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\MD5Util.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\InitRequstData.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\MenuUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SystemMonitorUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\SpringUtils.java

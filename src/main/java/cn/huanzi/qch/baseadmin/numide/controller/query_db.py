@@ -546,7 +546,7 @@ def print_result(remk,fp):
 #   fp.write("result,"+result+'\n')
 
     #用户输入#
-    fp.write("<table>\n")
+    fp.write("<table class='layui-table'>\n")
 
     fp.write("<tr>\n")
     fp.write("<td><b>用户编码</b></td>\n")
@@ -626,8 +626,9 @@ def main():
             remk = tune_tops_list(sumv)
             comp_inco_expr()
             comp_comp_expr()
-#             print_result(remk,fp)
+            print_result(remk,fp)
             print(out_file)
+            print(user_input, result[0])
         if interactive_mode == 0:
             break
 
@@ -638,3 +639,4 @@ def main():
 #---------------------------------------------------------------------
 if __name__ == "__main__":
     main()
+    print(out_file)
