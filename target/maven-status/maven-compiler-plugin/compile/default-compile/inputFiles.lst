@@ -8,6 +8,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysmenu\
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\service\SysSettingService.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\service\SysSettingServiceImpl.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysuser\service\SysUserService.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\QueryDetailRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\MyAccessDecisionManager.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\syssetting\repository\SysSettingRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\controller\CommonController.java
@@ -117,6 +118,7 @@ D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysusera
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\common\pojo\MonitorVo.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\config\security\MyPersistentTokenBasedRememberMeServices.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysauthority\service\SysAuthorityServiceImpl.java
+D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\controller\pojo\QueryDetail.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\numide\repository\StrainRepository.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\util\HttpServletResponseUtil.java
 D:\Document\Code\base-admin-1\src\main\java\cn\huanzi\qch\baseadmin\sys\sysshortcutmenu\vo\SysShortcutMenuVo.java

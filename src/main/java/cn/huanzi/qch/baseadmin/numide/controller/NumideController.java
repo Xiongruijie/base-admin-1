@@ -2,10 +2,7 @@ package cn.huanzi.qch.baseadmin.numide.controller;
 
 import cn.huanzi.qch.baseadmin.common.pojo.Result;
 import cn.huanzi.qch.baseadmin.numide.controller.pojo.*;
-import cn.huanzi.qch.baseadmin.numide.repository.QueryElementRepository;
-import cn.huanzi.qch.baseadmin.numide.repository.QueryRepository;
-import cn.huanzi.qch.baseadmin.numide.repository.StrainRepository;
-import cn.huanzi.qch.baseadmin.numide.repository.SystemInfoRepository;
+import cn.huanzi.qch.baseadmin.numide.repository.*;
 import cn.huanzi.qch.baseadmin.numide.service.NumideService;
 import cn.huanzi.qch.baseadmin.numide.vo.OutputResultVo;
 import com.google.gson.Gson;
@@ -38,6 +35,8 @@ public class NumideController {
     public SystemInfoRepository systemInfoRepository;
     @Autowired
     public QueryElementRepository queryElementRepository;
+    @Autowired
+    public QueryDetailRepository queryDetailRepository;
 
 
     @GetMapping("index")
@@ -67,8 +66,8 @@ public class NumideController {
     }
 
     @GetMapping("/querydata")
-    public Result<List<QueryEntity>> QueryData() {
-        return Result.of(queryRepository.findAll());
+    public Result<List<QueryDetail>> QueryData() {
+        return Result.of(queryDetailRepository.findAll());
     }
 
     //     获取输入信息
@@ -80,6 +79,7 @@ public class NumideController {
         GetInput getInput = gson.fromJson(str, GetInput.class);
         Integer systemNumber = getInput.getNum();
         String inputString = getInput.getInputStr();
+        String getInputDate = getInput.getDate();
         int i;
         String numberStr = "";
         for (i = 0; i + 3 < inputString.length() | i + 1 < inputString.length() | i + 2 < inputString.length(); i = i + 3) {
@@ -100,6 +100,7 @@ public class NumideController {
         SystemInfo systemInfo = systemInfoRepository.getOne(systemNumber);
         String filePath = systemInfo.getFile_location();
         java.io.File file = new java.io.File(filePath);
+        String sysname = systemInfo.getSystem_name();
 
         // 获取文件名
         String fileName = file.getName();
@@ -113,6 +114,7 @@ public class NumideController {
         // 生成结果
         String command = "python3 " + localPath + "query_db.py " + fileName + " " + numberStr;
         String pythonOutputFile = new String();
+        String resultStr = new String();
         try {
             // 创建 ProcessBuilder 对象，并设置命令和工作目录
             ProcessBuilder pb = new ProcessBuilder(command.split(" "));
@@ -125,9 +127,37 @@ public class NumideController {
             while ((lines = reader.readLine()) != null) {
                 if (lines.endsWith("res.md")) {
                     pythonOutputFile = lines;
-                    break;
+                }
+                if (lines.startsWith("result:")) {
+                    resultStr = lines.substring(8);
                 }
             }
+            String[] s = resultStr.split(",");
+
+            for (int j = 0; j < s.length; j++) {
+                s[j] = s[j].trim();
+                System.out.println(s[j]);
+            }
+            if (s[0].equals("0")) {
+                s[0] = "极好的鉴定结果";
+            }
+            if (s[0].equals("1")) {
+                s[0] = "很好的鉴定结果";
+            }
+            if (s[0].equals("2")) {
+                s[0] = "好的鉴定结果";
+            }
+            if (s[0].equals("3")) {
+                s[0] = "可接受的鉴定结果";
+            }
+            if (s[0].equals("4")) {
+                s[0] = "可疑的鉴定结果";
+            }
+            if (s[0].equals("5")) {
+                s[0] = "不可接受的鉴定结果";
+            }
+            QueryDetail queryDetail = new QueryDetail(sysname,s[2],s[1],s[3],s[4],s[0],getInputDate);
+            queryDetailRepository.save(queryDetail);
             // 读取错误输出
             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String errorLine;

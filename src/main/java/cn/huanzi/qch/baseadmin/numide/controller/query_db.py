@@ -1,4 +1,5 @@
 #! /usr/bin/python3
+# -*- coding:UTF-8 -*-
 import sys
 import os
 import importlib
@@ -30,6 +31,7 @@ list_data_base = params.list_data_base
 dict_spp_name  = params.dict_spp_name
 list_usel_seqn = params.list_usel_seqn
 list_data_tval = params.list_data_tval
+
 
 # 生成随机文件名
 random_filename = str(uuid.uuid4())
@@ -555,6 +557,7 @@ def print_result(remk,fp):
     fp.write("<td colspan='2'>%s</td>\n"%(result[0]))
     fp.write("<td>%s</td>\n"%(result[1]))
     fp.write("</tr>\n")
+    print("result:",remk,",",result[1],",",user_input,",",list_tops_perc[0],",",list_tops_tval[0])
 
     fp.write("<tr>\n")
     fp.write("<td><b>菌种名称</b></td>\n")
@@ -628,7 +631,7 @@ def main():
             comp_comp_expr()
             print_result(remk,fp)
             print(out_file)
-            print("result:",user_input, result[1],list_tops_perc[0],list_tops_tval[0],result[0])
+
         if interactive_mode == 0:
             break
 
